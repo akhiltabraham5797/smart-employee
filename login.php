@@ -6,8 +6,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
-  <!-- link for css file -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -47,7 +45,6 @@
             }
             ?>
            
-
             <form action="connect.php" method="post" id="form-t-box">
               <div class="form-group-t">
                 <label for="email" class="text-uppercase text-sm">Enter Email</label>

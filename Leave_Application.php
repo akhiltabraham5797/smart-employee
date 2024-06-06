@@ -49,7 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     </script>
 </head>
+
 <body class="leavebody">
+    
     <div class="leavecontainer leave-application-container">
         <h1>Apply for Leave</h1>
         <form id="leave-form" method="post" action="Leave_Application.php">
