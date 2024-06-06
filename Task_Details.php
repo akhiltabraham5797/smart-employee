@@ -58,8 +58,8 @@ $conn->close();
     <title>Task Details</title>
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-    <div class="container task-details-container">
+<body class="leavebody">
+    <div class="leavecontainer task-details-container">
         <h1>Task Details</h1>
         <form id="task-details-form" method="post" action="Task_Details.php">
             <div class="task-info">

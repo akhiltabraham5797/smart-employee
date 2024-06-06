@@ -22,10 +22,11 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave History</title>
+    
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-    <div class="container leave-history-container">
+<body class="leavebody">
+    <div class="leavecontainer leave-history-container">
         <h1>Leave History</h1>
         <table>
             <thead>
@@ -35,7 +36,7 @@ $result = $conn->query($sql);
                     <th>To Date</th>
                     <th>Requested Date</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <!-- <th>Action</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +49,7 @@ $result = $conn->query($sql);
                         echo "<td>" . $row["end_date"] . "</td>";
                         echo "<td>" . $row["requested_on"] . "</td>";
                         echo "<td>" . $row["status"] . "</td>";
-                        echo '<td><button class="view-details">View Details</button></td>';
+                        // echo '<td><button class="view-details">View Details</button></td>';
                         echo "</tr>";
                     }
                 } else {
