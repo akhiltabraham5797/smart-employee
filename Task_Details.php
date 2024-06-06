@@ -1,21 +1,17 @@
 <?php
-// Database connection settings
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "sems";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$task_id = 8; // Assuming we are fetching details for task with ID 1
-
-// Fetch task details from the database
+$task_id = 8; 
 $sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, users.first_name as project_manager 
         FROM tasks 
         JOIN projects ON tasks.project_id = projects.project_id 
@@ -25,7 +21,7 @@ $sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Fetch the task details
+    
     $task = $result->fetch_assoc();
 } else {
     echo "No task found with the specified ID.";
@@ -33,11 +29,8 @@ if ($result->num_rows > 0) {
     exit;
 }
 
-// Handle form submission for updating task status
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST['status'];
-
-    // Update task status in the database
     $update_sql = "UPDATE tasks SET status='$status' WHERE id=$task_id";
 
     if ($conn->query($update_sql) === TRUE) {
