@@ -53,8 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 </head>
 
-<body class="leavebody">
-    
 <body>
 <header>
   <nav class="navbar navbar-light bg-light">

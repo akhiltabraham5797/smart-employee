@@ -26,7 +26,7 @@ $result = $conn->query($sql);
 
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="leavebody">
+<body>
 <header>
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">Smart Employee</a>
@@ -40,6 +40,7 @@ $result = $conn->query($sql);
     </div>
   </nav>
 </header>
+<main class="leavebody">
     <div class="leavecontainer leave-history-container">
         <h1>Leave History</h1>
         <table>
@@ -74,5 +75,6 @@ $result = $conn->query($sql);
             </tbody>
         </table>
     </div>
+</main>
 </body>
 </html>
