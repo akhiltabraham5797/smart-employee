@@ -32,7 +32,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
             session_start();
             $_SESSION["user_id"] = $user_id;
             echo "<script>console.log('Login successful. Your user ID is: " . $user_id . "');</script>";
-            header("Location: dashboard.php");
+            header("Location: employee-dashboard.php");
             exit();
         } else {
             echo "<script>console.error('Invalid email or password.');</script>";

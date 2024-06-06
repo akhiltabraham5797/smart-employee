@@ -39,7 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply for Leave</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="assets/css/styles.css">
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var message = "<?php echo $message; ?>";
@@ -52,6 +55,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="leavebody">
     
+<body>
+<header>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">Smart Employee</a>
+    <div>
+      <div class="navbar-nav flex-row">
+        <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link px-2" href="userProfile.php?id=<?php echo $prof_details['user_id'];?>">Edit Profile</a>
+        <a class="nav-item nav-link px-2" href="Leave_Application.php?id=<?php echo $prof_details['user_id'];?>">Leave Application</a>
+        <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<main class="leavebody">
     <div class="leavecontainer leave-application-container">
         <h1>Apply for Leave</h1>
         <form id="leave-form" method="post" action="Leave_Application.php">
@@ -75,5 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Submit</button>
         </form>
     </div>
+    </main>
 </body>
 </html>

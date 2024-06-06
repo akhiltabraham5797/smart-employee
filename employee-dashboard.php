@@ -1,7 +1,9 @@
 <?php
 // Database connection
 require_once ('db_connection.php');
-$emp_id = "5";
+// session_start(); // Start the session
+// $emp_id = isset($_SESSION['user_id']); 
+$emp_id = "1";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +24,12 @@ $emp_id = "5";
 <body class="index-page emp_dashboard">
 <header>
   <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Smart Employee</a>
     <div>
       <div class="navbar-nav flex-row">
         <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="edit-profile.php?id=<?php echo $prof_details['user_id'];?>">Edit Profile</a>
+        <a class="nav-item nav-link px-2" href="userProfile.php?id=<?php echo $prof_details['user_id'];?>">Edit Profile</a>
+        <a class="nav-item nav-link px-2" href="Leave_Application.php?id=<?php echo $prof_details['user_id'];?>">Leave Application</a>
         <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
       </div>
     </div>
@@ -54,7 +57,7 @@ $emp_id = "5";
           <p><?php echo $prof_details['email']; ?></p>
         </div>
         <div class="emp_profile_cont">
-          <span>Email:</span>
+          <span>Designation:</span>
           <p><?php echo $prof_details['job_title']; ?></p>
         </div>
       </div>
@@ -68,7 +71,7 @@ $emp_id = "5";
       <div class="emp_tasks">
       <?php while ($task_details = $task_data->fetch(PDO::FETCH_ASSOC)) {
         ?>
-        <a href="task-details.php?id='<?php echo $task_details['task_id'];?>'" class="emp_task_box">
+        <a href="Task_Details.php?id='<?php echo $task_details['task_id'];?>'" class="emp_task_box">
           <div>
             <h4><?php echo $task_details['task_name']; ?></h4>
             <p class="mb-0"><?php echo $task_details['end_date']; ?></p>
@@ -89,8 +92,8 @@ $emp_id = "5";
     <div class="emp_box_right">
     <a href="generatepdf.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Generate Payslip</a>
           
-    <button class="pay_btn">Punch In</button>
-    <button class="pay_btn">Punch Out</button>
+    <!-- <button class="pay_btn">Punch In</button>
+    <button class="pay_btn">Punch Out</button> -->
     </div>
   </div>
 </main>
