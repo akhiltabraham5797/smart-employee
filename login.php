@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
   <!-- link for css file -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="index-page">
@@ -59,7 +59,9 @@
                 <input type="password" id="password" placeholder="Password" name="password" class="form-control mb">
                 <span class="text-danger"><?php echo $passwordErr; ?></span>
               </div>
+              <a href="employee-dashboard.php">
               <input type="submit" name="login" value="Login" class="btn btn-primary btn-block">
+              </a>
             </form>
             
             <div class="warps-new-usr">

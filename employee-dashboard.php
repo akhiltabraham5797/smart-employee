@@ -3,7 +3,7 @@
 require_once ('db_connection.php');
 // session_start(); // Start the session
 // $emp_id = isset($_SESSION['user_id']); 
-$emp_id = "5";
+$emp_id = "1";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,8 +92,8 @@ $emp_id = "5";
     <div class="emp_box_right">
     <a href="generatepdf.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Generate Payslip</a>
           
-    <button class="pay_btn">Punch In</button>
-    <button class="pay_btn">Punch Out</button>
+    <!-- <button class="pay_btn">Punch In</button>
+    <button class="pay_btn">Punch Out</button> -->
     </div>
   </div>
 </main>

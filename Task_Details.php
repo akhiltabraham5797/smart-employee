@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$task_id = 8; 
+$task_id = 1; 
 $sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, users.first_name as project_manager 
         FROM tasks 
         JOIN projects ON tasks.project_id = projects.project_id 
@@ -20,7 +20,7 @@ $sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.
 
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
+if ($result->num_rows!= false) {
     
     $task = $result->fetch_assoc();
 } else {
@@ -49,9 +49,24 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body class="leavebody">
+<header>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">Smart Employee</a>
+    <div>
+      <div class="navbar-nav flex-row">
+        <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link px-2" href="userProfile.php?id=<?php echo $prof_details['user_id'];?>">Edit Profile</a>
+        <a class="nav-item nav-link px-2" href="Leave_Application.php?id=<?php echo $prof_details['user_id'];?>">Leave Application</a>
+        <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
+      </div>
+    </div>
+  </nav>
+</header>
     <div class="leavecontainer task-details-container">
         <h1>Task Details</h1>
         <form id="task-details-form" method="post" action="Task_Details.php">
