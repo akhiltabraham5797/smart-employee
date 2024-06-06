@@ -24,7 +24,7 @@ $emp_id = "5";
 <body class="index-page emp_dashboard">
 <header>
   <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Smart Employee</a>
     <div>
       <div class="navbar-nav flex-row">
         <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
@@ -57,7 +57,7 @@ $emp_id = "5";
           <p><?php echo $prof_details['email']; ?></p>
         </div>
         <div class="emp_profile_cont">
-          <span>Email:</span>
+          <span>Designation:</span>
           <p><?php echo $prof_details['job_title']; ?></p>
         </div>
       </div>
@@ -71,7 +71,7 @@ $emp_id = "5";
       <div class="emp_tasks">
       <?php while ($task_details = $task_data->fetch(PDO::FETCH_ASSOC)) {
         ?>
-        <a href="task-details.php?id='<?php echo $task_details['task_id'];?>'" class="emp_task_box">
+        <a href="Task_Details.php?id='<?php echo $task_details['task_id'];?>'" class="emp_task_box">
           <div>
             <h4><?php echo $task_details['task_name']; ?></h4>
             <p class="mb-0"><?php echo $task_details['end_date']; ?></p>
