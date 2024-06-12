@@ -1,3 +1,10 @@
+<?php
+session_start();
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    $emp_id = $_SESSION['user_id'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,8 +23,8 @@
     <div>
       <div class="navbar-nav flex-row">
         <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="userProfile.php?id=<?php echo $prof_details['user_id'];?>">Edit Profile</a>
-        <a class="nav-item nav-link px-2" href="Leave_Application.php?id=<?php echo $prof_details['user_id'];?>">Leave Application</a>
+        <a class="nav-item nav-link px-2" href="userProfile.php">Edit Profile</a>
+        <a class="nav-item nav-link px-2" href="Leave_Application.php">Leave Application</a>
         <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
       </div>
     </div>

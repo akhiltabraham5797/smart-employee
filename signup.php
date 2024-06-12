@@ -19,10 +19,9 @@
                 <div class="col-md-12">
                     <div class="signup-top-wrapper">
                         <h3>Sign Up</h3>
-
                         <?php
-                        $username = $password = $firstname = $lastname = $email = $mobilenumber = "";
-                        $usernameErr = $passwordErr = $firstnameErr = $lastnameErr = $emailErr = $mobilenumberErr = "";
+                        $username = $password = $firstname = $lastname = $email = $mobilenumber = $role = $address = $date_joined = $department = $job_title = $date_of_birth = "";
+                        $usernameErr = $passwordErr = $firstnameErr = $lastnameErr = $emailErr = $mobilenumberErr = $roleErr = $addressErr = $date_joinedErr = $departmentErr = $job_titleErr = $date_of_birthErr = "";
 
                         if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             if (empty($_POST["firstname"])) {
@@ -52,6 +51,38 @@
                                 $password = $_POST["password"];
                             }
 
+                            if (empty($_POST["role"])) {
+                                $roleErr = "Role is required";
+                            } else {
+                                $role = $_POST["role"];
+                            }
+
+                            if (empty($_POST["address"])) {
+                                $addressErr = "Address is required";
+                            } else {
+                                $address = $_POST["address"];
+                            }
+                            if (empty($_POST["date_joined"])) {
+                                $date_joinedErr = "Date of joining is required";
+                            } else {
+                                $date_joined = $_POST["date_joined"];
+                            }
+                            if (empty($_POST["department"])) {
+                                $departmentErr = "Department is required";
+                            } else {
+                                $department = $_POST["department"];
+                            }
+                            if (empty($_POST["job_title"])) {
+                                $job_titleErr = "Job Title is required";
+                            } else {
+                                $job_title = $_POST["job_title"];
+                            }
+                            if (empty($_POST["date_of_birth"])) {
+                                $date_of_birthErr = "Date of birth is required";
+                            } else {
+                                $date_of_birth = $_POST["date_of_birth"];
+                            }
+
                             if (empty($_POST["mobilenumber"])) {
                                 $mobilenumberErr = "Mobile Number is required";
                             } else {
@@ -61,7 +92,8 @@
                                 }
                             }
 
-                            if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr) && empty($passwordErr) && empty($mobilenumberErr)) {
+                            if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr) && empty($passwordErr) && empty($mobilenumberErr) && empty($roleErr) && empty($addressErr) && empty($date_joinedErr)
+                             && empty($departmentErr) && empty($job_titleErr) && empty($date_of_birthErr)) {
                                 // Database connection settings
                                 $servername = "localhost";
                                 $db_username = "root";
@@ -80,12 +112,14 @@
                                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                                 // Prepare and bind the SQL statement
-                                $stmt = $conn->prepare("INSERT INTO users (username, password, first_name, last_name, email, phone) VALUES (?, ?, ?, ?, ?, ?)");
-                                $stmt->bind_param("ssssss", $email, $hashed_password, $firstname, $lastname, $email, $mobilenumber);
+                                $stmt = $conn->prepare("INSERT INTO users (username, password, first_name, last_name, email, phone, role, address, date_joined, department, job_title, date_of_birth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                $stmt->bind_param("ssssssssssss", $email, $hashed_password, $firstname, $lastname, $email, $mobilenumber,$role,$address,$date_joined,$department,$job_title,$date_of_birth);
 
                                 // Execute the statement
                                 if ($stmt->execute()) {
                                     echo "<script>alert('Registration Successful');</script>";
+                                    header("Location: login.php");
+                                    exit();
                                 } else {
                                     echo "<script>alert('Error registering user');</script>";
                                 }
@@ -125,6 +159,36 @@
                                 <label for="mobilenumber" class="text-uppercase text-sm">Enter Mobile Number</label>
                                 <input type="number" id="mobilenumber" placeholder="Mobile Number" name="mobilenumber" class="form-control mb" value="<?php echo htmlspecialchars($mobilenumber); ?>">
                                 <span class="text-danger"><?php echo $mobilenumberErr; ?></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" class="text-uppercase text-sm">Enter role</label>
+                                <input type="text" id="role" placeholder="role" name="role" class="form-control mb" value="<?php echo htmlspecialchars($role); ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address" class="text-uppercase text-sm">Enter Address</label>
+                                <input type="text" id="address" placeholder="address" name="address" class="form-control mb" value="<?php echo htmlspecialchars($address); ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date_joined" class="text-uppercase text-sm">Enter Date Of Joining</label>
+                                <input type="date" id="date_joined" placeholder="date_joined" name="date_joined" class="form-control mb" value="<?php echo htmlspecialchars($date_joined); ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="department" class="text-uppercase text-sm">Enter Department</label>
+                                <input type="text" id="department" placeholder="department" name="department" class="form-control mb" value="<?php echo htmlspecialchars($department); ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="job_title" class="text-uppercase text-sm">Enter Job Title</label>
+                                <input type="text" id="job_title" placeholder="job_title" name="job_title" class="form-control mb" value="<?php echo htmlspecialchars($job_title); ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date_of_birth" class="text-uppercase text-sm">Enter Date of birth</label>
+                                <input type="date" id="date_of_birth" placeholder="Date of birth" name="date_of_birth" class="form-control mb" value="<?php echo htmlspecialchars($date_of_birth); ?>">
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block">Sign Up</button>

@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$task_id = 1; 
+$task_id = 10; 
 
 $sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, users.first_name as project_manager 
         FROM tasks 
@@ -50,9 +50,9 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Details</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="index-page">
 <header>
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">Smart Employee</a>
@@ -104,7 +104,7 @@ $conn->close();
 
                 <div class="task-info-buttons">
                     <button type="submit">Update</button>
-                    <button type="button" onclick="window.location.href='dashboard.php';">Cancel</button>
+                    <button type="button" onclick="window.location.href='employee-dashboard.php';">Cancel</button>
                 </div>
             </div>
             <input type="hidden" name="task_id" value="<?php echo $task_id; ?>">

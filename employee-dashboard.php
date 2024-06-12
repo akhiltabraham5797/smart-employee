@@ -1,9 +1,11 @@
 <?php
 // Database connection
 require_once ('db_connection.php');
-// session_start(); // Start the session
-// $emp_id = isset($_SESSION['user_id']); 
-$emp_id = "1";
+session_start();
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    $emp_id = $_SESSION['user_id'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +16,7 @@ $emp_id = "1";
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
   <!-- link for css file -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <?php
   $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id=$emp_id");
@@ -28,8 +30,8 @@ $emp_id = "1";
     <div>
       <div class="navbar-nav flex-row">
         <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="userProfile.php?id=<?php echo $prof_details['user_id'];?>">Edit Profile</a>
-        <a class="nav-item nav-link px-2" href="Leave_Application.php?id=<?php echo $prof_details['user_id'];?>">Leave Application</a>
+        <a class="nav-item nav-link px-2" href="userProfile.php">Edit Profile</a>
+        <a class="nav-item nav-link px-2" href="Leave_Application.php">Leave Application</a>
         <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
       </div>
     </div>
