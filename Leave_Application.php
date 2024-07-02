@@ -28,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$user_id', '$leave_type', '$start_date', '$end_date', '$description', 'Pending', '$requested_on')";
 
     if ($conn->query($sql) === TRUE) {
-        $message = "New leave request submitted successfully";
+        // $message = "New leave request submitted successfully";
+        // header("Location: Leave_History.php");
+        echo "<script>alert('Leave Requested Sucessfully.');window.location.href = 'Leave_History.php';</script>";
     } else {
         $message = "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -43,8 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply for Leave</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="assets/css/style.css">
     
     <script>
@@ -59,14 +59,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="index-page">
 <header>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Smart Employee</a>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-      <div class="navbar-nav flex-row">
-        <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="userProfile.php">Edit Profile</a>
-        <a class="nav-item nav-link px-2" href="Leave_Application.php">Leave Application</a>
-        <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
+      <div class="navigation-cont">
+        <a class="navigation-link" href="employee-dashboard.php">Home</a>
+        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
+        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
   </nav>

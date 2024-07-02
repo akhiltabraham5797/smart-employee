@@ -13,7 +13,6 @@ if(isset($_SESSION['user_id'])) {
   <title>Smart Employee | Employee Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
   <!-- link for css file -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -25,20 +24,20 @@ if(isset($_SESSION['user_id'])) {
   ?>
 <body class="index-page emp_dashboard">
 <header>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Smart Employee</a>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-      <div class="navbar-nav flex-row">
-        <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="userProfile.php">Edit Profile</a>
-        <a class="nav-item nav-link px-2" href="Leave_Application.php">Leave Application</a>
-        <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
+      <div class="navigation-cont">
+        <a class="navigation-link" href="employee-dashboard.php">Home</a>
+        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
+        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
   </nav>
 </header>
 <main>
-  <h1 class="text-center text-light py-3">Employee Dashboard</h1>
+  <h1 class="emp_head">Employee Dashboard</h1>
   <div class="emp_box">
 
     <div class="emp_box_left">
@@ -47,19 +46,19 @@ if(isset($_SESSION['user_id'])) {
       </div>
       <div class="emp_profile_box">
         <div class="emp_profile_cont">
-          <span>Name:</span>
+          <label>Name:</label>
           <p><?php echo $prof_details['first_name']; ?> <?php echo $prof_details['last_name']; ?></p>
         </div>
         <div class="emp_profile_cont">
-          <span>Address:</span>
+          <label>Address:</label>
           <p><?php echo $prof_details['address']; ?></p>
         </div>
         <div class="emp_profile_cont">
-          <span>Email:</span>
+          <label>Email:</label>
           <p><?php echo $prof_details['email']; ?></p>
         </div>
         <div class="emp_profile_cont">
-          <span>Designation:</span>
+          <label>Designation:</label>
           <p><?php echo $prof_details['job_title']; ?></p>
         </div>
       </div>

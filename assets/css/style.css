@@ -1,5 +1,14 @@
 body{
-    font-family: Jost, sans-serif;
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+a{
+    text-decoration: none !important;
+}
+p{
+    margin: 0;
 }
 /* General Styles */
 .leavebody {
@@ -8,6 +17,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #222;
 }
 
 .leavecontainer {
@@ -24,6 +34,41 @@ h1 {
     text-align: center;
     color: #333;
 }
+.navigation{
+    background-color: #056276;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.navigation-logo{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+.navigation-logo:hover{
+    color: white;
+    text-decoration: none;
+}
+.navigation-cont{
+    display: flex;
+}
+.navigation-link{
+    color: white;
+    text-decoration: none;
+    margin-right: 35px;
+    transition: all .3s;
+    font-size: 18px;
+    font-weight: 400;
+}
+.navigation-link:hover{
+    color: white;
+    text-decoration: none;
+    scale: 1.1;
+    transition: all.3s;
+}
+
 /*General Styles end*/
 
 /* Leave Application Specific Styles */
@@ -153,7 +198,6 @@ h1 {
 /* css for the sign up page */
 body.index-page {
     background-color: #222;
-    font-family: Jost;
 }
 
 #signup-top-wrapper h3 {
@@ -276,6 +320,10 @@ form {
 .emp_dashboard .navbar-nav{
     flex-direction: row !important;
 }
+.emp_head{
+    color: white;
+    margin-top: 30px;
+}
 .emp_box{
     display: flex;
 
@@ -321,13 +369,13 @@ form {
 }
 .emp_profile_cont{
     display: flex;
-    font-size: 18px;
     font-weight: 400;
     margin-bottom: 15px;
 }
-.emp_profile_cont span{
+.emp_profile_cont label{
     width: 30%;
-    margin-right: 5px;
+    margin-right: 15px;
+    font-weight: bold;
 }
 .emp_profile_cont p{
     margin-bottom: 0;
