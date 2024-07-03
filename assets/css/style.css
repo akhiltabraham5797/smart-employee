@@ -408,6 +408,11 @@ form {
     display: flex;
     align-items: center;
 }
+.more_details img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
 .pay_btn{
     background-color: blue;
     width: 100%;
@@ -524,3 +529,62 @@ form {
 
 /* General CSS for the body */
 
+/* Project Tracking Page Css */
+.pro_track{
+    background-color: #222;
+}
+.pro_box{
+    background-color: #eef1f5;
+    padding: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.pro_wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+.pro_label{
+    font-size: 18px;
+    font-weight: bold;
+    width: 30%;
+    margin-right: 15px;
+    color: #06a3a3;
+
+}
+.pro_value{
+    width: 70%;
+}
+.pro_task_box{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+.pro_task_wrap{
+    margin-bottom: 15px;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+}
+.pro_task_name{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #06a3a3;
+}
+.pro_wrap p{
+    font-weight: bold;
+}
+.pro_wrap p span{
+    font-weight: normal;
+    font-style: italic;
+}
+.pro_task_id{
+    margin-bottom: 10px;
+}
+.pro_task_status{
+    margin-bottom: 10px;
+}
+.pro_task_assignee{
+    margin-bottom: 10px;
+}
