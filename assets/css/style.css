@@ -541,7 +541,7 @@ form {
 }
 .pro_wrap{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     margin-bottom: 25px;
 }
@@ -587,4 +587,16 @@ form {
 }
 .pro_task_assignee{
     margin-bottom: 10px;
+}
+.pro_progress_box{
+    width: 100%;
+    max-width: 400px;
+    height: 25px;
+    border: 1px solid #222;
+    background-color: #f6f1ec;
+    margin-bottom: 10px;
+}
+.pro_progress_cont{
+    background-color: #1a9529;
+    height: 100%;
 }
