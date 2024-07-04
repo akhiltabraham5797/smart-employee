@@ -29,10 +29,10 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
   <nav class="navigation">
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-      <div class="navigation-cont">
+    <div class="navigation-cont">
         <a class="navigation-link" href="projectmanager.php">Home</a>
-        <a class="navigation-link" href="#">Create new project</a>
-        <a class="navigation-link" href="#">Approve leave application</a>
+        <a class="navigation-link" href="management.php">Create Project</a>
+        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
@@ -69,22 +69,24 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
       </div>
     </div>
     
-    <div class="emp_box_center">
-      <h3>Projects & Tasks</h3>
+    <div class="pro_box_center">
+      <h3>Projects</h3>
       <div class="emp_tasks">
         <?php
         $proj_data = $pdo->prepare("SELECT * FROM projects WHERE user_id = ?");
         $proj_data->execute([$emp_id]);
         while ($proj_details = $proj_data->fetch(PDO::FETCH_ASSOC)) {
         ?>
-          <a href="project_tracking.php?<?php echo $proj_details['project_id']; ?>" class="emp_task_box">
+          <a href="project_tracking.php?project_id=<?php echo $proj_details['project_id']; ?>" class="emp_task_box">
             <div>
               <h4><?php echo htmlspecialchars($proj_details['project_name']); ?></h4>
               <p class="mb-0"><?php echo htmlspecialchars($proj_details['description']); ?></p>
             </div>
             <div class="more_details">
               <span class="mr-2">More Details</span>
+              <div style="width:20px;">
               <img src="assets/images/right-arrows.png">
+              </div>
             </div>
           </a>
         <?php } ?>

@@ -36,9 +36,9 @@ if (isset($_GET['project_id'])) {
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
       <div class="navigation-cont">
-        <a class="navigation-link" href="manager-dashboard.php">Home</a>
-        <a class="navigation-link" href="">Create Project</a>
-        <a class="navigation-link" href="">Leave Approval</a>
+        <a class="navigation-link" href="projectmanager.php">Home</a>
+        <a class="navigation-link" href="management.php">Create Project</a>
+        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
@@ -63,8 +63,8 @@ if (isset($_GET['project_id'])) {
       <p class="pro_label">Deadline:</p>
       <p class="pro_value"><?php echo $project_details['deadline']; ?></p>
     </div>
-    <div class="pro_wrap">
-      <p class="pro_label">Tasks:</p>
+    <div class="pro_task_outer">
+      <p class="pro_label">Tasks</p>
       <div class="pro_value">
         <div class="pro_task_box">
           <!-- Code to retrieve task details of the project -->
@@ -79,8 +79,10 @@ if (isset($_GET['project_id'])) {
           foreach ($tasks as $task) : 
           ?>
             <div class="pro_task_wrap">
-              <p class="pro_task_name"><?php echo $task['task_name']; ?></p>
-              <p class="pro_task_id">Deadline: <span><?php echo $task['end_date']; ?></span></p>
+              <div class="pro_task_row1">
+                <p class="pro_task_name"><?php echo $task['task_name']; ?></p>
+                <p class="pro_task_end">Deadline: <span><?php echo $task['end_date']; ?></span></p>
+              </div>
               <p class="pro_task_status">Status: <span><?php echo $task['status']; ?></span></p>
                   <?php 
                   $task_id = $task['task_id'];
