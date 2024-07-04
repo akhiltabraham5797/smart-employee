@@ -1,46 +1,41 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "sems";
+include 'db_connection.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$task_id = 10; 
+$task_id = 1; 
 
 $sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, users.first_name as project_manager 
         FROM tasks 
         JOIN projects ON tasks.project_id = projects.project_id 
         JOIN users ON projects.user_id = users.user_id 
-        WHERE tasks.task_id = $task_id";
+        WHERE tasks.task_id = :task_id";
 
-$result = $conn->query($sql);
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+$stmt->execute();
 
-if ($result->num_rows > 0) {
-    $task = $result->fetch_assoc();
+if ($stmt->rowCount() > 0) {
+    $task = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
     echo "No task found with the specified ID.";
-    $conn->close();
     exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST['status'];
-    $update_sql = "UPDATE tasks SET status='$status' WHERE task_id=$task_id";
+    $update_sql = "UPDATE tasks SET status=:status WHERE task_id=:task_id";
 
-    if ($conn->query($update_sql) === TRUE) {
+    $update_stmt = $pdo->prepare($update_sql);
+    $update_stmt->bindParam(':status', $status, PDO::PARAM_STR);
+    $update_stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+
+    if ($update_stmt->execute()) {
         echo "<script>alert('Task status updated successfully');</script>";
     } else {
-        echo "<script>alert('Error updating task status: " . $conn->error . "');</script>";
+        echo "<script>alert('Error updating task status: " . $update_stmt->errorInfo()[2] . "');</script>";
     }
 }
 
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -72,16 +67,16 @@ $conn->close();
         <form id="task-details-form" method="post" action="Task_Details.php">
             <div class="task-info">
                 <label for="task-name">Task Name:</label>
-                <p id="task-name"><?php echo $task['task_name']; ?></p>
+                <p id="task-name"><?php echo htmlspecialchars($task['task_name']); ?></p>
                 
                 <label for="project-manager">Project Manager:</label>
-                <p id="project-manager"><?php echo $task['project_manager']; ?></p>
+                <p id="project-manager"><?php echo htmlspecialchars($task['project_manager']); ?></p>
                 
                 <label for="project-name">Project Name:</label>
-                <p id="project-name"><?php echo $task['project_name']; ?></p>
+                <p id="project-name"><?php echo htmlspecialchars($task['project_name']); ?></p>
                 
                 <label for="task-for-the-day">Task for the Day:</label>
-                <p id="task-for-the-day"><?php echo $task['description']; ?></p>
+                <p id="task-for-the-day"><?php echo htmlspecialchars($task['description']); ?></p>
                 
                 <label for="backlog-tasks">Backlog Tasks:</label>
                 <p id="backlog-tasks">Update logo design, Create footer design</p>
@@ -90,7 +85,7 @@ $conn->close();
                 <p id="to-be-completed">Finalize home page design, Start about us page</p>
                 
                 <label for="deadline">Deadline:</label>
-                <p id="deadline"><?php echo $task['end_date']; ?></p>
+                <p id="deadline"><?php echo htmlspecialchars($task['end_date']); ?></p>
                 
                 <label for="notes">Notes:</label>
                 <p id="notes">Ensure the design is mobile-responsive</p>
@@ -107,7 +102,7 @@ $conn->close();
                     <button type="button" onclick="window.location.href='employee-dashboard.php';">Cancel</button>
                 </div>
             </div>
-            <input type="hidden" name="task_id" value="<?php echo $task_id; ?>">
+            <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($task_id); ?>">
         </form>
     </div>
 </main>

@@ -1,21 +1,13 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "sems";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+session_start();
+require_once('db_connection.php'); 
 
 $message = "";
-session_start();
-// Check if the user is logged in
-if(isset($_SESSION['user_id'])) {
+
+if (isset($_SESSION['user_id'])) {
     $emp_id = $_SESSION['user_id'];
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $emp_id;
     $leave_type = $_POST['leave_type'];
@@ -25,17 +17,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $requested_on = date("Y-m-d");
 
     $sql = "INSERT INTO leaverequests (user_id, LeaveType, start_date, end_date, reason, status, requested_on)
-            VALUES ('$user_id', '$leave_type', '$start_date', '$end_date', '$description', 'Pending', '$requested_on')";
-
-    if ($conn->query($sql) === TRUE) {
-        // $message = "New leave request submitted successfully";
-        // header("Location: Leave_History.php");
-        echo "<script>alert('Leave Requested Sucessfully.');window.location.href = 'Leave_History.php';</script>";
-    } else {
-        $message = "Error: " . $sql . "<br>" . $conn->error;
+            VALUES (:user_id, :leave_type, :start_date, :end_date, :description, 'Pending', :requested_on)";
+    
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':leave_type', $leave_type);
+        $stmt->bindParam(':start_date', $start_date);
+        $stmt->bindParam(':end_date', $end_date);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':requested_on', $requested_on);
+        $stmt->execute();
+        $message = "New leave request submitted successfully";
+    } catch (PDOException $e) {
+        $message = "Error: " . $e->getMessage();
     }
 
-    $conn->close();
+    $pdo = null; 
 }
 ?>
 
@@ -46,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply for Leave</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var message = "<?php echo $message; ?>";
@@ -56,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     </script>
 </head>
-
 <body class="index-page">
 <header>
   <nav class="navigation">
@@ -75,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="leavecontainer leave-application-container">
         <h1>Apply for Leave</h1>
         <form id="leave-form" method="post" action="Leave_Application.php">
-            <input type="hidden" name="user_id" value="1"> 
+            <input type="hidden" name="user_id" value="<?php echo $emp_id; ?>"> 
             <label for="leave-type">Type of Leave:</label>
             <select id="leave-type" name="leave_type" required>
                 <option value="casual">Casual</option>
@@ -95,6 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Submit</button>
         </form>
     </div>
-    </main>
+</main>
 </body>
 </html>
