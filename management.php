@@ -120,9 +120,9 @@ $pdo = null;
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
       <div class="navigation-cont">
-        <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
-        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
+        <a class="navigation-link" href="projectmanager.php">Home</a>
+        <a class="navigation-link" href="management.php">Create Project</a>
+        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
