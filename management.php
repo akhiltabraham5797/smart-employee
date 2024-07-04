@@ -8,16 +8,16 @@ if (isset($_SESSION['user_id'])) {
     $emp_id = $_SESSION['user_id'];
 }
 
-// PDO connection
+
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=sems", "root", "");
-    // Set PDO to throw exceptions on error
+    
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
 
-// Handle AJAX request to fetch project details
+
 if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_project_details') {
     $project_id = $_POST['project_id'];
 
@@ -36,7 +36,7 @@ if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_project_de
     }
 }
 
-// Handle AJAX request to search project by name
+
 if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'search_project') {
     $project_name = $_POST['project_name'];
 
@@ -55,7 +55,7 @@ if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'search_project')
     }
 }
 
-// Handle AJAX request to fetch unassigned employees
+
 if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_unassigned_employees') {
     try {
         $sql = "SELECT * FROM users WHERE project_id IS NULL";
@@ -71,7 +71,7 @@ if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_unassigned
     }
 }
 
-// Handle form submission to assign employee to project
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['assign_employee'])) {
         $project_id = $_POST['project_id_assign'];
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $assign_date = $_POST['assign_date'];
 
         try {
-            // Update the project_id in users table
+            
             $sql_update = "UPDATE users SET project_id = :project_id WHERE user_id = :employee_id";
             $stmt_update = $pdo->prepare($sql_update);
             $stmt_update->bindParam(':project_id', $project_id);
@@ -93,7 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch all projects for the dropdown
 try {
     $sql_projects = "SELECT project_id, project_name FROM projects";
     $stmt_projects = $pdo->prepare($sql_projects);
@@ -103,7 +102,6 @@ try {
     $message = "Error fetching projects: " . $e->getMessage();
 }
 
-// Close the PDO connection
 $pdo = null;
 ?>
 
@@ -241,7 +239,7 @@ $pdo = null;
             },
             success: function(response) {
                 alert('Employee assigned successfully');
-                fetchUnassignedEmployees(); // Refresh the list of unassigned employees
+                fetchUnassignedEmployees(); 
             }
         });
     }
