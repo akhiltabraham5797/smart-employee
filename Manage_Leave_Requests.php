@@ -37,6 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Leave Requests</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script>
         function setStatus(status, leaveId) {
             document.getElementById('status-' + leaveId).value = status;
@@ -55,6 +57,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a class="navigation-link" href="logout.php">Logout</a>
         </div>
     </nav>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
+    <div>
+      <div class="navigation-cont">
+        <a class="navigation-link" href="projectmanager.php">Home</a>
+        <a class="navigation-link" href="management.php">Create Project</a>
+        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
+      </div>
+    </div>
+  </nav>
 </header>
 <main class="container mt-5">
     <h1>Manage Leave Requests</h1>
