@@ -37,25 +37,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Leave Requests</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
     <script>
         function setStatus(status, leaveId) {
             document.getElementById('status-' + leaveId).value = status;
         }
     </script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Smart Employee</a>
-    <div>
-      <div class="navbar-nav flex-row">
-        <a class="nav-item nav-link active px-2" href="manager-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
-      </div>
-    </div>
-  </nav>
+    <nav class="navigation">
+        <a class="navigation-logo" href="#">Smart Employee</a>
+        <div class="navigation-cont">
+            <a class="navigation-link" href="projectmanager.php">Home</a>
+            <a class="navigation-link" href="management.php">Create Project</a>
+            <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
+            <a class="navigation-link" href="logout.php">Logout</a>
+        </div>
+    </nav>
 </header>
 <main class="container mt-5">
     <h1>Manage Leave Requests</h1>
@@ -64,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php echo $message; ?>
         </div>
     <?php endif; ?>
-    <table class="table table-striped">
+    <table class="leave-requests-table table-striped">
         <thead>
             <tr>
                 <th>Employee Name</th>
@@ -95,8 +94,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <textarea name="description" rows="2" cols="30" placeholder="Description" required class="form-control mb-2"></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-success btn-sm mt-2" onclick="setStatus('Approved', <?php echo $request['leave_id']; ?>)">Approve</button>
-                                <button type="submit" class="btn btn-danger btn-sm mt-2" onclick="setStatus('Rejected', <?php echo $request['leave_id']; ?>)">Reject</button>
+                                <div class="action-buttons">
+                                    <button type="submit" class="btn btn-success btn-sm mt-2" onclick="setStatus('Approved', <?php echo $request['leave_id']; ?>)">Approve</button>
+                                    <button type="submit" class="btn btn-danger btn-sm mt-2" onclick="setStatus('Rejected', <?php echo $request['leave_id']; ?>)">Reject</button>
+                                </div>
                             </form>
                         </td>
                     </tr>
@@ -107,3 +108,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </main>
 </body>
 </html>
+

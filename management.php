@@ -1,26 +1,49 @@
 <?php
 session_start();
-require_once('db_connection.php'); 
-
-$message = "";
+require_once('db_connection.php');
 
 if (isset($_SESSION['user_id'])) {
     $emp_id = $_SESSION['user_id'];
 }
 
-
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=sems", "root", "");
-    
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
 
+if (isset($_POST['ajax_request'])) {
+    switch ($_POST['ajax_request']) {
+        case 'fetch_project_details':
+            fetchProjectDetails($pdo);
+            break;
+        case 'search_project':
+            searchProject($pdo);
+            break;
+        case 'fetch_unassigned_employees':
+            fetchUnassignedEmployees($pdo);
+            break;
+        case 'create_project':
+            createProject($pdo);
+            break;
+        case 'assign_employee':
+            assignEmployee($pdo);
+            break;
+        case 'fetch_assigned_employees':
+            fetchAssignedEmployees($pdo);
+            break;
+        case 'assign_task':
+            assignTask($pdo);
+            break;
+        case 'assign_task_all':
+            assignTaskAll($pdo);
+            break;
+    }
+}
 
-if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_project_details') {
+function fetchProjectDetails($pdo) {
     $project_id = $_POST['project_id'];
-
     try {
         $sql = "SELECT * FROM projects WHERE project_id = :project_id";
         $stmt = $pdo->prepare($sql);
@@ -36,10 +59,8 @@ if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_project_de
     }
 }
 
-
-if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'search_project') {
+function searchProject($pdo) {
     $project_name = $_POST['project_name'];
-
     try {
         $sql = "SELECT * FROM projects WHERE project_name = :project_name";
         $stmt = $pdo->prepare($sql);
@@ -55,8 +76,7 @@ if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'search_project')
     }
 }
 
-
-if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_unassigned_employees') {
+function fetchUnassignedEmployees($pdo) {
     try {
         $sql = "SELECT * FROM users WHERE project_id IS NULL";
         $stmt = $pdo->prepare($sql);
@@ -71,39 +91,136 @@ if (isset($_POST['ajax_request']) && $_POST['ajax_request'] == 'fetch_unassigned
     }
 }
 
+function createProject($pdo) {
+    $project_name = $_POST['project_name'];
+    $description = $_POST['description'];
+    $deadline = $_POST['deadline'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['assign_employee'])) {
-        $project_id = $_POST['project_id_assign'];
-        $employee_id = $_POST['employee_id'];
-        $assign_date = $_POST['assign_date'];
+    try {
+        $sql = "INSERT INTO projects (project_name, description, start_date, end_date) VALUES (:project_name, :description, NOW(), :deadline)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':project_name', $project_name);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':deadline', $deadline);
+        $stmt->execute();
 
-        try {
-            
-            $sql_update = "UPDATE users SET project_id = :project_id WHERE user_id = :employee_id";
-            $stmt_update = $pdo->prepare($sql_update);
-            $stmt_update->bindParam(':project_id', $project_id);
-            $stmt_update->bindParam(':employee_id', $employee_id);
-            $stmt_update->execute();
-
-            $message = "Employee assigned to project successfully";
-        } catch (PDOException $e) {
-            $message = "Error: " . $e->getMessage();
-        }
+        echo json_encode(['success' => 'Project created successfully']);
+        exit;
+    } catch (PDOException $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+        exit;
     }
 }
 
-try {
-    $sql_projects = "SELECT project_id, project_name FROM projects";
-    $stmt_projects = $pdo->prepare($sql_projects);
-    $stmt_projects->execute();
-    $projects = $stmt_projects->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    $message = "Error fetching projects: " . $e->getMessage();
+function assignEmployee($pdo) {
+    $project_id = $_POST['project_id_assign'];
+    $employee_id = $_POST['employee_id'];
+    $assign_date = $_POST['assign_date'];
+
+    try {
+        $sql_update = "UPDATE users SET project_id = :project_id WHERE user_id = :employee_id";
+        $stmt_update = $pdo->prepare($sql_update);
+        $stmt_update->bindParam(':project_id', $project_id);
+        $stmt_update->bindParam(':employee_id', $employee_id);
+        $stmt_update->execute();
+
+        echo json_encode(['success' => 'Employee assigned to project successfully']);
+        exit;
+    } catch (PDOException $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+        exit;
+    }
 }
 
-$pdo = null;
+function fetchAssignedEmployees($pdo) {
+    $project_id = $_POST['project_id'];
+    try {
+        $sql = "SELECT users.user_id, users.first_name, users.last_name FROM users WHERE project_id = :project_id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':project_id', $project_id);
+        $stmt->execute();
+        $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode($employees);
+        exit;
+    } catch (PDOException $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+        exit;
+    }
+}
+
+function assignTask($pdo) {
+    $project_id = $_POST['project_id'];
+    $employee_id = $_POST['employee_id'];
+    $task_name = $_POST['task_name'];
+    $task_description = $_POST['task_description'];
+    $task_start_date = $_POST['task_start_date'];
+    $task_end_date = $_POST['task_end_date'];
+
+    try {
+        $sql = "INSERT INTO tasks (project_id, task_name, description, assigned_to, start_date, end_date, status) 
+                VALUES (:project_id, :task_name, :task_description, :employee_id, :task_start_date, :task_end_date, 'Not Started')";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':project_id', $project_id);
+        $stmt->bindParam(':task_name', $task_name);
+        $stmt->bindParam(':task_description', $task_description);
+        $stmt->bindParam(':employee_id', $employee_id);
+        $stmt->bindParam(':task_start_date', $task_start_date);
+        $stmt->bindParam(':task_end_date', $task_end_date);
+        $stmt->execute();
+
+        echo json_encode(['success' => 'Task assigned successfully']);
+        exit;
+    } catch (PDOException $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+        exit;
+    }
+}
+
+function assignTaskAll($pdo) {
+    $project_id = $_POST['project_id'];
+    $response = array();
+
+    // Fetch all assigned employees for the project
+    $sql = "SELECT user_id FROM project_employees WHERE project_id = :project_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':project_id', $project_id);
+    $stmt->execute();
+    $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($employees as $employee) {
+        $user_id = $employee['user_id'];
+        $task_name = $_POST["task_name_$user_id"];
+        $task_description = $_POST["task_description_$user_id"];
+        $task_start_date = $_POST["task_start_date_$user_id"];
+        $task_end_date = $_POST["task_end_date_$user_id"];
+
+        try {
+            $sql_task = "INSERT INTO tasks (project_id, user_id, task_name, description, start_date, end_date, status) 
+                         VALUES (:project_id, :user_id, :task_name, :description, :start_date, :end_date, 'Not Started')";
+            $stmt_task = $pdo->prepare($sql_task);
+            $stmt_task->bindParam(':project_id', $project_id);
+            $stmt_task->bindParam(':user_id', $user_id);
+            $stmt_task->bindParam(':task_name', $task_name);
+            $stmt_task->bindParam(':description', $task_description);
+            $stmt_task->bindParam(':start_date', $task_start_date);
+            $stmt_task->bindParam(':end_date', $task_end_date);
+            $stmt_task->execute();
+
+            $response['success'] = 'Tasks assigned successfully.';
+        } catch (PDOException $e) {
+            $response['error'] = 'Error assigning tasks: ' . $e->getMessage();
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+    echo json_encode($response);
+    exit;
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -120,9 +237,9 @@ $pdo = null;
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
       <div class="navigation-cont">
-        <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
-        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
+        <a class="navigation-link" href="projectmanager.php">Home</a>
+        <a class="navigation-link" href="management.php">Create Project</a>
+        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
@@ -133,12 +250,13 @@ $pdo = null;
     <div class="tab-header">
         <div class="tab active" data-tab="project-creation">Project Creation</div>
         <div class="tab" data-tab="assign-employee">Assign Employee</div>
+        <div class="tab" data-tab="view-assigned-employees">View Assigned Employees</div>
     </div>
 
     <div class="tab-content active" id="project-creation">
         <div class="leavecontainer">
             <h1>Project Creation</h1>
-            <form action="" method="post">
+            <form id="create_project_form">
                 <label for="project_name_create">Project Name:</label>
                 <input type="text" id="project_name_create" name="project_name">
 
@@ -148,9 +266,8 @@ $pdo = null;
                 <label for="deadline_create">Deadline:</label>
                 <input type="date" id="deadline_create" name="deadline">
 
-                <button type="submit" name="create_project">Create Project</button>
+                <button type="button" onclick="createProject()">Create Project</button>
             </form>
-            <?php echo $message; ?>
         </div>
     </div>
 
@@ -159,7 +276,7 @@ $pdo = null;
             <h1>Assign Employee</h1>
             <form action="" method="post">
                 <label for="project_search">Search Project:</label>
-                <input type="text" id="project_search" name="project_search" onkeyup="searchProject()">
+                <input type="text" id="project_search" name="project_search">
 
                 <button type="button" onclick="searchProject()">Search</button>
 
@@ -168,7 +285,25 @@ $pdo = null;
 
                 <div id="employee_list"></div>
             </form>
-            <?php echo $message; ?>
+        </div>
+    </div>
+
+    <div class="tab-content" id="view-assigned-employees">
+        <div class="leavecontainer">
+            <h1>View Assigned Employees</h1>
+            <form id="assign_tasks_form" action="" method="post">
+                <label for="project_search_view">Search Project:</label>
+                <input type="text" id="project_search_view" name="project_search_view">
+
+                <button type="button" onclick="searchProjectView()">Search</button>
+
+                <label for="project_id_view">Project ID:</label>
+                <input type="text" id="project_id_view" name="project_id_view" readonly>
+
+                <div id="assigned_employee_list"></div>
+
+                <button type="button" onclick="assignAllTasks()">Submit</button>
+            </form>
         </div>
     </div>
 </div>
@@ -183,6 +318,30 @@ $pdo = null;
             document.getElementById(this.getAttribute('data-tab')).classList.add('active');
         });
     });
+
+    function createProject() {
+        const formData = {
+            ajax_request: 'create_project',
+            project_name: $('#project_name_create').val(),
+            description: $('#description_create').val(),
+            deadline: $('#deadline_create').val()
+        };
+
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                const result = JSON.parse(response);
+                if (result.success) {
+                    alert(result.success);
+                    $('#create_project_form')[0].reset();
+                } else if (result.error) {
+                    alert(result.error);
+                }
+            }
+        });
+    }
 
     function searchProject() {
         const project_name = document.getElementById('project_search').value;
@@ -232,14 +391,83 @@ $pdo = null;
             url: '',
             type: 'POST',
             data: {
-                assign_employee: true,
+                ajax_request: 'assign_employee',
                 project_id_assign: project_id,
                 employee_id: employee_id,
                 assign_date: assign_date
             },
             success: function(response) {
-                alert('Employee assigned successfully');
-                fetchUnassignedEmployees(); 
+                const result = JSON.parse(response);
+                if (result.success) {
+                    alert(result.success);
+                    fetchUnassignedEmployees(); // Refresh list of unassigned employees
+                } else if (result.error) {
+                    alert(result.error);
+                }
+            }
+        });
+    }
+
+    function searchProjectView() {
+        const project_name = document.getElementById('project_search_view').value;
+        if (project_name) {
+            $.ajax({
+                url: '',
+                type: 'POST',
+                data: { ajax_request: 'search_project', project_name: project_name },
+                success: function(response) {
+                    const project = JSON.parse(response);
+                    if (project) {
+                        $('#project_id_view').val(project.project_id);
+                        fetchAssignedEmployees();
+                    } else {
+                        alert('Project not found');
+                    }
+                }
+            });
+        }
+    }
+
+    function fetchAssignedEmployees() {
+        const project_id = $('#project_id_view').val();
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: { ajax_request: 'fetch_assigned_employees', project_id: project_id },
+            success: function(response) {
+                const employees = JSON.parse(response);
+                let html = '<table><tr><th>Employee Name</th><th>Task Name</th><th>Description</th><th>Start Date</th><th>End Date</th></tr>';
+                employees.forEach(employee => {
+                    html += `<tr>
+                                <td>${employee.first_name} ${employee.last_name}</td>
+                                <td><input type="text" name="task_name_${employee.user_id}" id="task_name_${employee.user_id}"></td>
+                                <td><input type="text" name="task_description_${employee.user_id}" id="task_description_${employee.user_id}"></td>
+                                <td><input type="date" name="task_start_date_${employee.user_id}" id="task_start_date_${employee.user_id}"></td>
+                                <td><input type="date" name="task_end_date_${employee.user_id}" id="task_end_date_${employee.user_id}"></td>
+                             </tr>`;
+                });
+                html += '</table>';
+                $('#assigned_employee_list').html(html);
+            }
+        });
+    }
+
+    function assignAllTasks() {
+        const project_id = $('#project_id_view').val();
+        const formData = $('#assign_tasks_form').serialize() + `&ajax_request=assign_task_all&project_id=${project_id}`;
+
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                const result = JSON.parse(response);
+                if (result.success) {
+                    alert(result.success);
+                    fetchAssignedEmployees();
+                } else if (result.error) {
+                    alert(result.error);
+                }
             }
         });
     }
