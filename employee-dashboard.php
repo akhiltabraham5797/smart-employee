@@ -61,6 +61,7 @@ if(isset($_SESSION['user_id'])) {
           <label>Designation:</label>
           <p><?php echo $prof_details['job_title']; ?></p>
         </div>
+          <a href="edit_profile.php" class="editbutton">Edit profile</a>
       </div>
       
     </div>
