@@ -409,6 +409,11 @@ form {
     display: flex;
     align-items: center;
 }
+.more_details img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
 .pay_btn{
     background-color: blue;
     width: 100%;
@@ -598,3 +603,260 @@ select[multiple] {
 select[multiple] option {
     padding: 5px;
 }
+/* Project Tracking Page Css */
+.pro_track{
+    background-color: #222;
+}
+.pro_box{
+    background-color: #eef1f5;
+    padding: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.pro_wrap{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    margin-bottom: 25px;
+}
+.pro_label{
+    font-size: 18px;
+    font-weight: bold;
+    width: 30%;
+    margin-right: 15px;
+    color: #06a3a3;
+
+}
+.pro_value{
+    width: 70%;
+}
+.pro_task_outer{
+    margin-bottom: 30px;
+}
+.pro_task_outer .pro_value{
+    width: 100%;
+}
+.pro_task_outer .pro_label{
+    width: 100%;
+    margin-bottom: 10px;
+    /* text-align: center; */
+    font-size: 25px;
+}
+.pro_task_box{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+.pro_task_wrap{
+    margin-bottom: 15px;
+    background-color: darkslategrey;
+    color: #fff;
+    padding: 20px;
+}
+.pro_task_row1{
+    display: flex;
+    justify-content: space-between;
+}
+.pro_task_name{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #0dd6d6;
+}
+.pro_task_end{
+    color: #da0606;
+}
+.pro_wrap p{
+    font-weight: bold;
+}
+.pro_wrap p span{
+    font-weight: normal;
+    font-style: italic;
+}
+.pro_task_id{
+    margin-bottom: 10px;
+}
+.pro_task_status{
+    margin-bottom: 10px;
+}
+.pro_task_assignee{
+    margin-bottom: 10px;
+}
+.pro_progress_box{
+    width: 100%;
+    max-width: 400px;
+    height: 25px;
+    border: 1px solid #222;
+    background-color: #f6f1ec;
+    margin-bottom: 10px;
+}
+.pro_progress_cont{
+    background-color: #1a9529;
+    height: 100%;
+}
+/* Employee Dashboard css */
+.emp_dashboard .navbar-nav {
+    flex-direction: row !important;
+}
+
+.emp_head {
+    color: white;
+    margin-top: 30px;
+}
+
+.pro_box_center {
+    background-color: #eef1f5;
+    color: #000;
+    padding: 15px;
+    border: 1px solid lightgray;
+    margin: 20px;
+    width: 70%;
+}
+
+
+.partition {
+    display: flex;
+    gap: 20px; 
+}
+
+.emp_profile_box {
+    flex: 1; 
+}
+
+.emp_profile_cont {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.emp_profile_cont label {
+    width: 30%;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.emp_profile_cont p {
+    margin-bottom: 0;
+    width: 70%;
+}
+
+.prof_img {
+    width: 130px;
+    height: auto;
+    border-radius: 50px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.prof_img img {
+    width: 100%;
+    height: auto;
+}
+
+.editbutton {
+    display: block;
+    margin-top: 10px;
+    color: #fff;
+    background-color: #007bff;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.editbutton:hover {
+    background-color: #0056b3;
+}
+
+.emp_tasks {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.emp_task_box {
+    border: 1px solid #000;
+    padding: 15px;
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.emp_task_box:hover {
+    text-decoration: none;
+    color: #fff;
+    scale: 1.02;
+    transition: .3s;
+}
+
+.more_details {
+    display: flex;
+    align-items: center;
+}
+
+.more_details img {
+    max-height: 60px;
+    max-width: 60px;
+}
+
+/* css for edit profile page */
+
+.container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    background-color: #000; 
+  }
+
+  .box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .box h1 {
+    text-align: center;
+  }
+
+  .box form div {
+    margin-bottom: 15px;
+  }
+
+  .box form div label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .box form div input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .box form div button {
+    width: 100%;
+    padding: 10px;
+    background-color: #010101;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .box form div button:hover {
+    background-color: #0056b3;
+  }
+
+  .editbutton{
+    padding: 10px;
+    background-color: #010101;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
