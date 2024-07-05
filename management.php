@@ -100,12 +100,12 @@ function createProject($pdo) {
     $deadline = $_POST['deadline'];
 
     try {
-        $sql = "INSERT INTO projects (project_name, description, start_date, end_date, managed_by) VALUES (:project_name, :description, NOW(), :deadline, :managed_by)";
+        $sql = "INSERT INTO projects (project_name, description, start_date, end_date, user_id) VALUES (:project_name, :description, NOW(), :deadline, :user_id)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':project_name', $project_name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':deadline', $deadline);
-        $stmt->bindParam(':managed_by', $emp_id);
+        $stmt->bindParam(':user_id', $emp_id);
         $stmt->execute();
 
         echo json_encode(['success' => 'Project created successfully']);
@@ -253,8 +253,8 @@ function assignTaskAll($pdo) {
 <div class="tab-container">
     <div class="tab-header">
         <div class="tab active" data-tab="project-creation">Project Creation</div>
-        <div class="tab" data-tab="assign-employee">Assign Employee</div>
-        <div class="tab" data-tab="view-assigned-employees">View Assigned Employees</div>
+        <div class="tab" data-tab="assign-employee">Assign Employee To Project</div>
+        <div class="tab" data-tab="view-assigned-employees">Assign Tasks to Employee</div>
     </div>
 
     <div class="tab-content active" id="project-creation">
@@ -277,7 +277,7 @@ function assignTaskAll($pdo) {
 
     <div class="tab-content" id="assign-employee">
         <div class="leavecontainer">
-            <h1>Assign Employee</h1>
+            <h1>Assign Employee To Project</h1>
             <form action="" method="post">
                 <label for="project_search">Search Project:</label>
                 <input type="text" id="project_search" name="project_search">
@@ -294,7 +294,7 @@ function assignTaskAll($pdo) {
 
     <div class="tab-content" id="view-assigned-employees">
         <div class="leavecontainer">
-            <h1>View Assigned Employees</h1>
+            <h1>Assign Tasks to Employee</h1>
             <form id="assign_tasks_form" action="" method="post">
                 <label for="project_search_view">Search Project:</label>
                 <input type="text" id="project_search_view" name="project_search_view">
@@ -306,7 +306,7 @@ function assignTaskAll($pdo) {
 
                 <div id="assigned_employee_list"></div>
 
-                <button type="button" onclick="assignAllTasks()">Submit</button>
+                <button type="button" onclick="assignTask()">Submit</button>
             </form>
         </div>
     </div>

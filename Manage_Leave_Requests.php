@@ -57,17 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a class="navigation-link" href="logout.php">Logout</a>
         </div>
     </nav>
-  <nav class="navigation">
-    <a class="navigation-logo" href="#">Smart Employee</a>
-    <div>
-      <div class="navigation-cont">
-        <a class="navigation-link" href="projectmanager.php">Home</a>
-        <a class="navigation-link" href="management.php">Create Project</a>
-        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
-        <a class="navigation-link" href="logout.php">Logout</a>
-      </div>
-    </div>
-  </nav>
 </header>
 <main class="container mt-5">
     <h1>Manage Leave Requests</h1>

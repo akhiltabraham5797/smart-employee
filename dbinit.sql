@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2024 at 12:59 AM
+-- Generation Time: Jul 05, 2024 at 05:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -104,12 +104,17 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`project_id`, `project_name`, `description`, `start_date`, `end_date`, `status`, `user_id`, `managed_by`) VALUES
-(1, 'Website Redesign', 'Redesign the company website for better UX', '2023-06-01', '2023-12-01', 'In Progress', 2, NULL),
+(1, 'Website Redesign', 'Redesign the company website for better UX', '2023-06-01', '2023-12-01', 'In Progress', 14, NULL),
 (2, 'Mobile App Development', 'Develop a mobile application for the company services', '2023-01-01', '2023-09-30', 'Pending', 2, NULL),
 (3, 'project x', 'app development', '2024-07-04', '2024-07-31', 'Pending', NULL, NULL),
 (4, 'project z', 'web', '2024-07-04', '2024-07-31', 'Pending', NULL, NULL),
 (5, 'project ABC', 'Web Dev', '2024-07-04', '2024-07-12', 'Pending', NULL, NULL),
-(6, 'project q', 'q', '2024-07-04', '2024-07-31', 'Pending', NULL, NULL);
+(6, 'project q', 'q', '2024-07-04', '2024-07-31', 'Pending', NULL, NULL),
+(7, 'project r', 'rrrrrrrrrrr', '2024-07-04', '2024-07-31', 'Pending', NULL, NULL),
+(8, 'project v', 'vvvv', '2024-07-04', '2024-07-31', 'Pending', NULL, 14),
+(9, 'project qq', 'qqq', '2024-07-04', '2024-07-31', 'Pending', NULL, 14),
+(10, 'project t', 'tt', '2024-07-04', '2024-07-31', 'Pending', 14, NULL),
+(11, 'Project CDE', 'CDE', '2024-07-04', '2024-07-31', 'Pending', 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -159,8 +164,8 @@ CREATE TABLE `tasks` (
 INSERT INTO `tasks` (`task_id`, `project_id`, `task_name`, `description`, `assigned_to`, `start_date`, `end_date`, `status`) VALUES
 (1, 1, 'Update Logo', 'Update the company logo with the new design', 1, '2023-06-15', '2023-06-30', 'Completed'),
 (2, 1, 'Create Footer Design', 'Design the footer for the new website layout', 1, '2023-07-01', '2023-07-15', 'Pending'),
-(3, 2, 'Design App UI', 'Design the user interface for the mobile app', 1, '2023-02-01', '2023-03-15', 'Pending'),
-(4, 3, 'Develop A', 'Develop a', 1, '2024-07-01', '2024-07-20', '');
+(3, 10, 'Design App UI', 'Design the user interface for the mobile app', 1, '2023-02-01', '2023-03-15', 'Pending'),
+(4, 11, 'Develop A', 'Develop a', 1, '2024-07-01', '2024-07-20', '');
 
 -- --------------------------------------------------------
 
@@ -204,9 +209,9 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `first_name`, `l
 (9, 'michaeljordan', 'zB2%6ht8L$', 'Employee', 'Michael', 'Jordan', 'michael.jordan@example.com', '123-456-7890', '123 Main St\nSpringfield, IL 62704', '2022-01-15', 'Marketing', 'Specialist', '1985-06-14', 'Sarah Jordan', '234-567-8901', 'Spouse', 3),
 (10, 'emilyclark', 'P4ssW0rd!7$', 'Manager', 'Emily', 'Clark', 'emily.clark@example.com', '789-012-3456', '456 Elm St\nBrooklyn, NY 11201', '2023-03-05', 'Finance', 'Director', '1990-12-10', 'John Clark', '890-123-4567', 'Parent', 4),
 (11, 'johnsmith', 'Qw3rtY&78', 'Employee', 'John', 'Smith', 'john.smith@example.com', '456-789-0123', '789 Pine St\nSeattle, WA 98101', '2021-06-20', 'Engineering', 'Engineer', '1987-08-22', 'Jane Smith', '567-890-1234', 'Sibling', 4),
-(12, 'laurawilson', 'H3ll0W0rld$', 'Employee', 'Laura', 'Wilson', 'laura.wilson@example.com', '234-567-8901', '987 Oak St\nSan Francisco, CA 94102', '2022-07-30', 'HR', 'Recruiter', '1993-04-12', 'Paul Wilson', '345-678-9012', 'Parent', NULL),
-(13, 'davidlee', 'R3d@ppl3#8', 'Employee', 'David', 'Lee', 'david.lee@example.com', '678-901-2345', '321 Birch St\nBoston, MA 02118', '2021-04-11', 'Operations', 'Coordinator', '1991-11-05', 'Linda Lee', '789-012-3456', 'Spouse', NULL),
-(14, 'userone@mail.com', '$2y$10$TyVjOXMSbiBXTqzup54Yd.GkQG/XtVg82X6xOnSo.0BHRMhjqjJq6', 'project manager', 'user', 'one', 'userone@mail.com', '1111111111', 'address 1', '2024-07-01', 'Front end', 'project manager', '2024-07-02', NULL, NULL, NULL, NULL),
+(12, 'laurawilson', 'H3ll0W0rld$', 'Employee', 'Laura', 'Wilson', 'laura.wilson@example.com', '234-567-8901', '987 Oak St\nSan Francisco, CA 94102', '2022-07-30', 'HR', 'Recruiter', '1993-04-12', 'Paul Wilson', '345-678-9012', 'Parent', 8),
+(13, 'davidlee', 'R3d@ppl3#8', 'Employee', 'David', 'Lee', 'david.lee@example.com', '678-901-2345', '321 Birch St\nBoston, MA 02118', '2021-04-11', 'Operations', 'Coordinator', '1991-11-05', 'Linda Lee', '789-012-3456', 'Spouse', 10),
+(14, 'userone@mail.com', '$2y$10$TyVjOXMSbiBXTqzup54Yd.GkQG/XtVg82X6xOnSo.0BHRMhjqjJq6', 'project manager', 'user', 'one', 'userone@mail.com', '1111111111', 'address 5', '2024-07-01', 'Front end', 'project manager', '2024-07-02', NULL, NULL, NULL, NULL),
 (15, 'empone@mail.com', '$2y$10$jg9JANbRXR8yypI2nakXGeMnFkUCRsTmCpZcuPJO4IuAGlmsKCE/2', 'employee', 'emp', 'one', 'empone@mail.com', '1111111111', 'address 2', '2024-07-01', 'back end', 'developer', '2024-07-01', NULL, NULL, NULL, 4);
 
 --
@@ -227,13 +232,6 @@ ALTER TABLE `leaverequests`
   ADD PRIMARY KEY (`leave_id`),
   ADD KEY `user_id` (`user_id`);
 
---
--- Indexes for table `projects`
---
-ALTER TABLE `projects`
-  ADD PRIMARY KEY (`project_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `managed_by` (`managed_by`);
 
 --
 -- Indexes for table `salaries`
@@ -279,7 +277,7 @@ ALTER TABLE `leaverequests`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `salaries`
