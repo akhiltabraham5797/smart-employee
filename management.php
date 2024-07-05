@@ -2,6 +2,8 @@
 session_start();
 require_once('db_connection.php');
 
+global $emp_id;
+
 if (isset($_SESSION['user_id'])) {
     $emp_id = $_SESSION['user_id'];
 }
@@ -92,16 +94,18 @@ function fetchUnassignedEmployees($pdo) {
 }
 
 function createProject($pdo) {
+    global $emp_id;
     $project_name = $_POST['project_name'];
     $description = $_POST['description'];
     $deadline = $_POST['deadline'];
 
     try {
-        $sql = "INSERT INTO projects (project_name, description, start_date, end_date) VALUES (:project_name, :description, NOW(), :deadline)";
+        $sql = "INSERT INTO projects (project_name, description, start_date, end_date, managed_by) VALUES (:project_name, :description, NOW(), :deadline, :managed_by)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':project_name', $project_name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':deadline', $deadline);
+        $stmt->bindParam(':managed_by', $emp_id);
         $stmt->execute();
 
         echo json_encode(['success' => 'Project created successfully']);
@@ -111,6 +115,7 @@ function createProject($pdo) {
         exit;
     }
 }
+
 
 function assignEmployee($pdo) {
     $project_id = $_POST['project_id_assign'];
@@ -181,7 +186,6 @@ function assignTaskAll($pdo) {
     $project_id = $_POST['project_id'];
     $response = array();
 
-    // Fetch all assigned employees for the project
     $sql = "SELECT user_id FROM project_employees WHERE project_id = :project_id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':project_id', $project_id);
@@ -400,7 +404,7 @@ function assignTaskAll($pdo) {
                 const result = JSON.parse(response);
                 if (result.success) {
                     alert(result.success);
-                    fetchUnassignedEmployees(); // Refresh list of unassigned employees
+                    fetchUnassignedEmployees(); 
                 } else if (result.error) {
                     alert(result.error);
                 }
