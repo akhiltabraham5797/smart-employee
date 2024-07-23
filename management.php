@@ -17,9 +17,7 @@ try {
 
 if (isset($_POST['ajax_request'])) {
     switch ($_POST['ajax_request']) {
-        case 'fetch_project_details':
-            fetchProjectDetails($pdo);
-            break;
+
         case 'search_project':
             searchProject($pdo);
             break;
@@ -35,29 +33,9 @@ if (isset($_POST['ajax_request'])) {
         case 'fetch_assigned_employees':
             fetchAssignedEmployees($pdo);
             break;
-        case 'assign_task':
-            assignTask($pdo);
-            break;
         case 'assign_task_all':
             assignTaskAll($pdo);
             break;
-    }
-}
-
-function fetchProjectDetails($pdo) {
-    $project_id = $_POST['project_id'];
-    try {
-        $sql = "SELECT * FROM projects WHERE project_id = :project_id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':project_id', $project_id);
-        $stmt->execute();
-        $project = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        echo json_encode($project);
-        exit;
-    } catch (PDOException $e) {
-        echo json_encode(['error' => $e->getMessage()]);
-        exit;
     }
 }
 
@@ -147,34 +125,6 @@ function fetchAssignedEmployees($pdo) {
         $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo json_encode($employees);
-        exit;
-    } catch (PDOException $e) {
-        echo json_encode(['error' => $e->getMessage()]);
-        exit;
-    }
-}
-
-function assignTask($pdo) {
-    $project_id = $_POST['project_id'];
-    $employee_id = $_POST['employee_id'];
-    $task_name = $_POST['task_name'];
-    $task_description = $_POST['task_description'];
-    $task_start_date = $_POST['task_start_date'];
-    $task_end_date = $_POST['task_end_date'];
-
-    try {
-        $sql = "INSERT INTO tasks (project_id, task_name, description, assigned_to, start_date, end_date, status) 
-                VALUES (:project_id, :task_name, :task_description, :employee_id, :task_start_date, :task_end_date, 'Not Started')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':project_id', $project_id);
-        $stmt->bindParam(':task_name', $task_name);
-        $stmt->bindParam(':task_description', $task_description);
-        $stmt->bindParam(':employee_id', $employee_id);
-        $stmt->bindParam(':task_start_date', $task_start_date);
-        $stmt->bindParam(':task_end_date', $task_end_date);
-        $stmt->execute();
-
-        echo json_encode(['success' => 'Task assigned successfully']);
         exit;
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
@@ -293,23 +243,24 @@ function assignTaskAll($pdo) {
     </div>
 
     <div class="tab-content" id="view-assigned-employees">
-        <div class="leavecontainer">
-            <h1>Assign Tasks to Employee</h1>
-            <form id="assign_tasks_form" action="" method="post">
-                <label for="project_search_view">Search Project:</label>
-                <input type="text" id="project_search_view" name="project_search_view">
+    <div class="leavecontainer">
+        <h1>Assign Tasks to Employee</h1>
+        <form id="assign_tasks_form" action="" method="post">
+            <label for="project_search_view">Search Project:</label>
+            <input type="text" id="project_search_view" name="project_search_view">
 
-                <button type="button" onclick="searchProjectView()">Search</button>
+            <button type="button" onclick="searchProjectView()">Search</button>
 
-                <label for="project_id_view">Project ID:</label>
-                <input type="text" id="project_id_view" name="project_id_view" readonly>
+            <label for="project_id_view">Project ID:</label>
+            <input type="text" id="project_id_view" name="project_id_view" readonly>
 
-                <div id="assigned_employee_list"></div>
+            <div id="assigned_employee_list"></div>
 
-                <button type="button" onclick="assignTask()">Submit</button>
-            </form>
-        </div>
+            <button type="button" onclick="assignAllTasks()">Submit</button>
+        </form>
     </div>
+</div>
+
 </div>
 
 <script>
@@ -457,24 +408,25 @@ function assignTaskAll($pdo) {
     }
 
     function assignAllTasks() {
-        const project_id = $('#project_id_view').val();
-        const formData = $('#assign_tasks_form').serialize() + `&ajax_request=assign_task_all&project_id=${project_id}`;
+    const project_id = $('#project_id_view').val();
+    const formData = $('#assign_tasks_form').serialize() + `&ajax_request=assign_task_all&project_id=${project_id}`;
 
-        $.ajax({
-            url: '',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                const result = JSON.parse(response);
-                if (result.success) {
-                    alert(result.success);
-                    fetchAssignedEmployees();
-                } else if (result.error) {
-                    alert(result.error);
-                }
+    $.ajax({
+        url: '',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            const result = JSON.parse(response);
+            if (result.success) {
+                alert(result.success);
+                fetchAssignedEmployees();
+            } else if (result.error) {
+                alert(result.error);
             }
-        });
-    }
+        }
+    });
+}
+
 </script>
 </body>
 </html>

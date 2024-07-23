@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2024 at 05:40 AM
+-- Generation Time: Jul 23, 2024 at 06:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,10 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `sems`
 --
-
-CREATE DATABASE IF NOT EXISTS sems;
-
-USE sems;
 
 -- --------------------------------------------------------
 
@@ -61,26 +57,28 @@ CREATE TABLE `leaverequests` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `reason` text NOT NULL,
-  `status` enum('Pending','Approved','Rejected') NOT NULL DEFAULT 'Pending',
+  `status` enum('Pending','Approved by PM','Approved by HR','Rejected') NOT NULL DEFAULT 'Pending',
   `requested_on` date NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL,
+  `approval_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `leaverequests`
 --
 
-INSERT INTO `leaverequests` (`leave_id`, `user_id`, `LeaveType`, `start_date`, `end_date`, `reason`, `status`, `requested_on`, `description`) VALUES
-(1, 1, 'casual', '2024-07-01', '2024-07-10', 'Family vacation', 'Approved', '2024-06-15', 'accepted'),
-(2, 2, 'sick', '2024-08-01', '2024-08-05', 'Medical leave', 'Approved', '2024-07-20', 'Recovering from surgery.'),
-(3, 3, 'earned', '2024-09-15', '2024-09-25', 'Annual leave', 'Approved', '2024-08-10', 'Aprove'),
-(4, 1, 'sick', '2024-07-20', '2024-07-25', 'Flu recovery', 'Rejected', '2024-07-18', 'Need time off to recover from the flu.'),
-(5, 2, 'casual', '2024-06-20', '2024-06-25', 'Personal reasons', 'Approved', '2024-06-01', 'Personal matters to attend to.'),
-(6, 3, 'earned', '2024-10-05', '2024-10-15', 'Holiday', 'Rejected', '2024-09-01', 'reject'),
-(7, 1, 'sick', '2024-07-30', '2024-08-02', 'Dental surgery', 'Rejected', '2024-07-25', 'rejected'),
-(8, 2, 'casual', '2024-08-10', '2024-08-15', 'Short vacation', 'Pending', '2024-07-30', 'Weekend getaway.'),
-(9, 3, 'sick', '2024-09-01', '2024-09-03', 'Migraine', 'Approved', '2024-08-28', 'Severe migraine attacks.'),
-(10, 1, 'earned', '2024-11-20', '2024-11-30', 'Long vacation', 'Pending', '2024-10-15', 'Extended holiday break.');
+INSERT INTO `leaverequests` (`leave_id`, `user_id`, `LeaveType`, `start_date`, `end_date`, `reason`, `status`, `requested_on`, `description`, `approved_by`, `approval_date`) VALUES
+(1, 1, 'casual', '2024-07-01', '2024-07-10', 'Family vacation', '', '2024-06-15', 'accepted', NULL, NULL),
+(2, 2, 'sick', '2024-08-01', '2024-08-05', 'Medical leave', '', '2024-07-20', 'Recovering from surgery.', NULL, NULL),
+(3, 3, 'earned', '2024-09-15', '2024-09-25', 'Annual leave', '', '2024-08-10', 'Aprove', NULL, NULL),
+(4, 1, 'sick', '2024-07-20', '2024-07-25', 'Flu recovery', 'Rejected', '2024-07-18', 'Need time off to recover from the flu.', NULL, NULL),
+(5, 2, 'casual', '2024-06-20', '2024-06-25', 'Personal reasons', '', '2024-06-01', 'Personal matters to attend to.', NULL, NULL),
+(6, 3, 'earned', '2024-10-05', '2024-10-15', 'Holiday', 'Rejected', '2024-09-01', 'reject', NULL, NULL),
+(7, 1, 'sick', '2024-07-30', '2024-08-02', 'Dental surgery', 'Rejected', '2024-07-25', 'rejected', NULL, NULL),
+(8, 2, 'casual', '2024-08-10', '2024-08-15', 'Short vacation', 'Rejected', '2024-07-30', 'Weekend getaway.', 12, '2024-07-23'),
+(9, 3, 'sick', '2024-09-01', '2024-09-03', 'Migraine', 'Rejected', '2024-08-28', 'Severe migraine attacks.', 12, '2024-07-23'),
+(10, 1, 'earned', '2024-11-20', '2024-11-30', 'Long vacation', 'Approved by HR', '2024-10-15', 'Extended holiday break.', 12, '2024-07-23');
 
 -- --------------------------------------------------------
 
@@ -212,7 +210,8 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `first_name`, `l
 (12, 'laurawilson', 'H3ll0W0rld$', 'Employee', 'Laura', 'Wilson', 'laura.wilson@example.com', '234-567-8901', '987 Oak St\nSan Francisco, CA 94102', '2022-07-30', 'HR', 'Recruiter', '1993-04-12', 'Paul Wilson', '345-678-9012', 'Parent', 8),
 (13, 'davidlee', 'R3d@ppl3#8', 'Employee', 'David', 'Lee', 'david.lee@example.com', '678-901-2345', '321 Birch St\nBoston, MA 02118', '2021-04-11', 'Operations', 'Coordinator', '1991-11-05', 'Linda Lee', '789-012-3456', 'Spouse', 10),
 (14, 'userone@mail.com', '$2y$10$TyVjOXMSbiBXTqzup54Yd.GkQG/XtVg82X6xOnSo.0BHRMhjqjJq6', 'project manager', 'user', 'one', 'userone@mail.com', '1111111111', 'address 5', '2024-07-01', 'Front end', 'project manager', '2024-07-02', NULL, NULL, NULL, NULL),
-(15, 'empone@mail.com', '$2y$10$jg9JANbRXR8yypI2nakXGeMnFkUCRsTmCpZcuPJO4IuAGlmsKCE/2', 'employee', 'emp', 'one', 'empone@mail.com', '1111111111', 'address 2', '2024-07-01', 'back end', 'developer', '2024-07-01', NULL, NULL, NULL, 4);
+(15, 'empone@mail.com', '$2y$10$jg9JANbRXR8yypI2nakXGeMnFkUCRsTmCpZcuPJO4IuAGlmsKCE/2', 'employee', 'emp', 'one', 'empone@mail.com', '1111111111', 'address 2', '2024-07-01', 'back end', 'developer', '2024-07-01', NULL, NULL, NULL, 4),
+(16, 'ob@mail.com', '$2y$10$WEiofwoUwxCzyc6KuX4r6uaXK/g00iaCuTL0J8Vy9UTC58H5.KGMG', 'HR', 'Bob', 'Brown', 'ob@mail.com', '1111111111', 'address123', '2020-08-01', 'HR', 'HR', '1996-01-01', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -230,8 +229,16 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `leaverequests`
   ADD PRIMARY KEY (`leave_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `approved_by` (`approved_by`);
 
+--
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`project_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `managed_by` (`managed_by`);
 
 --
 -- Indexes for table `salaries`
@@ -295,7 +302,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
@@ -311,7 +318,8 @@ ALTER TABLE `attendance`
 -- Constraints for table `leaverequests`
 --
 ALTER TABLE `leaverequests`
-  ADD CONSTRAINT `leaverequests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `leaverequests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `leaverequests_ibfk_2` FOREIGN KEY (`approved_by`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `projects`

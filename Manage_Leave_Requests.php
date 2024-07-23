@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <textarea name="description" rows="2" cols="30" placeholder="Description" required class="form-control mb-2"></textarea>
                                 </div>
                                 <div class="action-buttons">
-                                    <button type="submit" class="btn btn-success btn-sm mt-2" onclick="setStatus('Approved', <?php echo $request['leave_id']; ?>)">Approve</button>
+                                    <button type="submit" class="btn btn-success btn-sm mt-2" onclick="setStatus('Approved by PM', <?php echo $request['leave_id']; ?>)">Approve</button>
                                     <button type="submit" class="btn btn-danger btn-sm mt-2" onclick="setStatus('Rejected', <?php echo $request['leave_id']; ?>)">Reject</button>
                                 </div>
                             </form>
