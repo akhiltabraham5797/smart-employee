@@ -1,5 +1,4 @@
 <?php
-// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -7,16 +6,14 @@ $dbname = "sems";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if a form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $leave_id = $_POST['leave_id'];
     $action = $_POST['action'];
-    $hr_user_id = 12; // Replace with the actual HR user ID
+    $hr_user_id = 12; 
 
     if ($action == 'approve') {
         $status = 'Approved by HR';
@@ -24,11 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $approved_by = $hr_user_id;
     } elseif ($action == 'reject') {
         $status = 'Rejected';
-        $approval_date = date('Y-m-d'); // Setting the date of rejection
-        $approved_by = $hr_user_id; // Setting the user who rejected the request
+        $approval_date = date('Y-m-d'); 
+        $approved_by = $hr_user_id;
     }
 
-    // Update the leave request status
     $sql = "UPDATE LeaveRequests SET 
             status = '$status', 
             approval_date = '$approval_date', 
@@ -41,12 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error updating record: " . $conn->error;
     }
 
-    // Redirect to the same page to see the updated list
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// Retrieve leave requests approved by project manager
 $sql = "SELECT lr.leave_id, lr.user_id, u.first_name AS user_name, lr.LeaveType, lr.start_date, lr.end_date, lr.reason, lr.requested_on, 
         pm.first_name AS pm_name
         FROM LeaveRequests lr
@@ -78,7 +72,6 @@ $result = $conn->query($sql);
         </tr>
         <?php
         if ($result->num_rows > 0) {
-            // Output data of each row
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row['leave_id'] . "</td>";
@@ -107,6 +100,5 @@ $result = $conn->query($sql);
 </html>
 
 <?php
-// Close connection
 $conn->close();
 ?>
