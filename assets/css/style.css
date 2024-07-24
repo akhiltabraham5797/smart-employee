@@ -973,3 +973,41 @@ select[multiple] option {
     border-bottom-right-radius: 8px;
 }
 
+/* HR Dashboard CSS */
+.hr_box_center{
+    width: 60%;
+    margin: 20px;
+}
+.hr_task_box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.hr_task_box span{
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+.hr_task_left{
+    width: 45%;
+    margin-right: 20px;
+    padding: 20px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: darkcyan;
+}
+
+.hr_task_right{
+    width: 45%;
+    padding: 20px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #7071e4;
+}
