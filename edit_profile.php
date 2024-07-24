@@ -32,10 +32,18 @@
     }
 
     require_once('db_connection.php');
+    if(isset($_REQUEST["eid"]))
+    {
+      $emp_id = $_REQUEST['eid'];
+    }
+    else
+    {
+      $emp_id = $_SESSION['user_id'];
+    }
+    
 
-    $emp_id = $_SESSION['user_id'];
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+    {
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $address = $_POST['address'];
@@ -46,8 +54,14 @@
         $sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, email = ?, job_title = ? WHERE user_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$first_name, $last_name, $address, $email, $job_title, $emp_id]);
-
-        header('Location: projectmanager.php?update=success');
+        if($emp_id !=  "")
+        {
+          header('Location: employee-list.php?update=success');
+        }
+        else
+        {
+          header('Location: employee-list.php?update=success');
+        }
         exit;
     }
 
@@ -78,6 +92,7 @@
       <div>
         <label for="job_title">Job Title:</label>
         <input type="text" id="job_title" name="job_title" value="<?php echo htmlspecialchars($user['job_title']); ?>" required>
+        <input type="hidden" id="eid" name="eid" value="<?php echo @$_REQUEST['eid']; ?>">
       </div>
       <div>
         <button type="submit">Save Changes</button>
