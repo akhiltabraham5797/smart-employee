@@ -984,10 +984,18 @@ select[multiple] option {
     justify-content: space-between;
     margin-bottom: 30px;
 }
-.hr_task_box span{
+.hr_box_cont{
+    text-align: center;
+}
+.hr_box_cont p{
     font-size: 20px;
     font-weight: bold;
     color: white;
+    margin-top: 10px;
+}
+.hr_box_cont img{
+    width: 75px;
+    height: auto;
 }
 .hr_task_left{
     width: 45%;
@@ -998,7 +1006,19 @@ select[multiple] option {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: darkcyan;
+    transition: .3s;
+}
+.color1{
+    background-color: #388e3c;
+}
+.color2{
+    background-color: #1976d2;
+}
+.color3{
+    background-color: #f9a825;
+}
+.color4{
+    background-color: #c62828;
 }
 
 .hr_task_right{
@@ -1009,5 +1029,9 @@ select[multiple] option {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #7071e4;
+    transition: .3s;
+}
+.hr_task_box a:hover{
+    scale: 1.03;
+    transition: .3s;
 }

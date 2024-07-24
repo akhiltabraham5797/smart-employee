@@ -30,9 +30,8 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
     <div class="navigation-cont">
-        <a class="navigation-link" href="projectmanager.php">Home</a>
-        <a class="navigation-link" href="management.php">Create Project</a>
-        <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
+        <a class="navigation-link" href="hr-dashboard.php">Home</a>
+        <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
@@ -71,19 +70,31 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
     
     <div class="hr_box_center">
         <div class="hr_task_box">
-            <a href="" class="hr_task_left">
-                <span>Employee Details</span>
+            <a href="employee-list.php" class="hr_task_left color2">
+              <div class="hr_box_cont">
+                <img src="./assets/images/employee-list-icon.svg">
+                <p>Employee Details</p>
+              </div>
             </a>
-            <a href="" class="hr_task_right">
-                <span>Salary & Attendance</span>
+            <a href="" class="hr_task_right color4">
+            <div class="hr_box_cont">
+                <img src="./assets/images/salary-icon.svg">
+                <p>Salary & Attendance</p>
+              </div>
             </a>
         </div>
         <div class="hr_task_box">
-            <a href="" class="hr_task_left">
-                <span>Leave Approval</span>
+            <a href="HR_Manage_Leave_Request.php" class="hr_task_left color3">
+            <div class="hr_box_cont">
+                <img src="./assets/images/leave-icon.svg">
+                <p>Leave Approval</p>
+              </div>
             </a>
-            <a href="" class="hr_task_right">
-            <span>Complaints & Suggestions</span>
+            <a href="complaint-list.php" class="hr_task_right color1">
+            <div class="hr_box_cont">
+                <img src="./assets/images/complaints-icon.svg">
+                <p>Complaints & Suggestions</p>
+              </div>
             </a>
         </div>
         
