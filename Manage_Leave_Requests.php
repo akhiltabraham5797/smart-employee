@@ -11,6 +11,8 @@ $leave_requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $message = "";
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start(); // Start the session to access session variables
     $leave_id = $_POST['leave_id'];
