@@ -18,7 +18,6 @@
           <div class="wrap-login-top">
             <h3>Login</h3>
             <?php
-            // Removed PHP validation code here
             ?>
             <form action="connect.php" method="post" id="form-t-box">
               <div class="form-group-t">
