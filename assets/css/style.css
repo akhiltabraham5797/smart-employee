@@ -1035,3 +1035,13 @@ select[multiple] option {
     scale: 1.03;
     transition: .3s;
 }
+/* HR Leave Approval CSS */
+.hr_leave_table{
+    width: 100%;
+}
+.hr_leave{
+    margin: 40px;
+}
+.hr_leave_table form{
+    margin-top: 0;
+}
