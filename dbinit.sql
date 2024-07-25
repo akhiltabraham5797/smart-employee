@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2024 at 06:33 AM
+-- Generation Time: Jul 25, 2024 at 04:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `attendance` (
   `attendance_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date NOT NULL,
+  `work_hours` int(11) NOT NULL,
   `clock_in_time` time DEFAULT NULL,
   `clock_out_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -39,10 +40,36 @@ CREATE TABLE `attendance` (
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`attendance_id`, `user_id`, `date`, `clock_in_time`, `clock_out_time`) VALUES
-(1, 1, '2023-06-01', '08:00:00', '17:00:00'),
-(2, 1, '2023-06-02', '08:05:00', '17:10:00'),
-(3, 2, '2023-06-01', '08:30:00', '17:30:00');
+INSERT INTO `attendance` (`attendance_id`, `user_id`, `date`, `work_hours`, `clock_in_time`, `clock_out_time`) VALUES
+(1, 1, '2023-06-01', 0, '08:00:00', '17:00:00'),
+(2, 1, '2023-06-02', 0, '08:05:00', '17:10:00'),
+(3, 2, '2023-06-01', 0, '08:30:00', '17:30:00'),
+(4, 17, '2024-07-25', 0, '01:42:21', '01:56:14'),
+(5, 17, '2024-07-25', 0, '01:58:06', '02:15:06'),
+(6, 17, '2024-07-25', 0, '02:15:18', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `complaints`
+--
+
+CREATE TABLE `complaints` (
+  `compaint_id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `complaint_description` longtext NOT NULL,
+  `raised_on` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `complaints`
+--
+
+INSERT INTO `complaints` (`compaint_id`, `user_id`, `complaint_description`, `raised_on`) VALUES
+(1, 1, 'testing123', '2024-07-20 22:30:00'),
+(2, 1, 'ttttttttttttttttttt', '2024-07-20 22:30:00'),
+(3, 1, 'test compllllllllllllllll', '2024-07-20 22:30:00'),
+(4, 24, 'late salary', '2024-07-24 08:00:00');
 
 -- --------------------------------------------------------
 
@@ -127,16 +154,33 @@ CREATE TABLE `salaries` (
   `payment_date` date NOT NULL,
   `pay_period_start` date DEFAULT NULL,
   `pay_period_end` date DEFAULT NULL,
-  `project_name` varchar(100) DEFAULT NULL
+  `project_name` varchar(100) DEFAULT NULL,
+  `hourly_rate` decimal(10,2) NOT NULL,
+  `total_hours` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `salaries`
 --
 
-INSERT INTO `salaries` (`salary_id`, `user_id`, `amount`, `payment_date`, `pay_period_start`, `pay_period_end`, `project_name`) VALUES
-(1, 1, 5000.00, '2023-06-30', '2023-06-01', '2023-06-30', 'Website Redesign'),
-(2, 2, 7000.00, '2023-06-30', '2023-06-01', '2023-06-30', 'Mobile App Development');
+INSERT INTO `salaries` (`salary_id`, `user_id`, `amount`, `payment_date`, `pay_period_start`, `pay_period_end`, `project_name`, `hourly_rate`, `total_hours`) VALUES
+(3, 1, 2000.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project A', 25.00, 80.00),
+(4, 2, 2500.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project B', 30.00, 83.33),
+(5, 3, 1800.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project C', 20.00, 90.00),
+(6, 4, 2200.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project D', 27.50, 80.00),
+(7, 5, 2400.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project E', 28.00, 85.71),
+(8, 6, 1920.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project F', 24.00, 80.00),
+(9, 7, 1750.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project G', 21.88, 80.00),
+(10, 8, 2100.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project H', 25.00, 84.00),
+(11, 9, 2300.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project I', 28.75, 80.00),
+(12, 10, 2800.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project J', 35.00, 80.00),
+(13, 11, 2650.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project K', 33.13, 80.00),
+(14, 12, 1900.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project L', 23.75, 80.00),
+(15, 13, 2100.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project M', 26.25, 80.00),
+(16, 14, 2900.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project N', 36.25, 80.00),
+(17, 15, 3200.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project O', 40.00, 80.00),
+(18, 16, 2700.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project P', 33.75, 80.00),
+(19, 17, 3000.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project Q', 37.50, 80.00);
 
 -- --------------------------------------------------------
 
@@ -211,7 +255,8 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `first_name`, `l
 (13, 'davidlee', 'R3d@ppl3#8', 'Employee', 'David', 'Lee', 'david.lee@example.com', '678-901-2345', '321 Birch St\nBoston, MA 02118', '2021-04-11', 'Operations', 'Coordinator', '1991-11-05', 'Linda Lee', '789-012-3456', 'Spouse', 10),
 (14, 'userone@mail.com', '$2y$10$TyVjOXMSbiBXTqzup54Yd.GkQG/XtVg82X6xOnSo.0BHRMhjqjJq6', 'project manager', 'user', 'one', 'userone@mail.com', '1111111111', 'address 5', '2024-07-01', 'Front end', 'project manager', '2024-07-02', NULL, NULL, NULL, NULL),
 (15, 'empone@mail.com', '$2y$10$jg9JANbRXR8yypI2nakXGeMnFkUCRsTmCpZcuPJO4IuAGlmsKCE/2', 'employee', 'emp', 'one', 'empone@mail.com', '1111111111', 'address 2', '2024-07-01', 'back end', 'developer', '2024-07-01', NULL, NULL, NULL, 4),
-(16, 'ob@mail.com', '$2y$10$WEiofwoUwxCzyc6KuX4r6uaXK/g00iaCuTL0J8Vy9UTC58H5.KGMG', 'HR', 'Bob', 'Brown', 'ob@mail.com', '1111111111', 'address123', '2020-08-01', 'HR', 'HR', '1996-01-01', NULL, NULL, NULL, NULL);
+(16, 'ob@mail.com', '$2y$10$WEiofwoUwxCzyc6KuX4r6uaXK/g00iaCuTL0J8Vy9UTC58H5.KGMG', 'HR', 'Bob', 'Brown', 'ob@mail.com', '1111111111', 'address123', '2020-08-01', 'HR', 'HR', '1996-01-01', NULL, NULL, NULL, NULL),
+(17, 'anaij@mail.com', '$2y$10$xR8muB7UXejd.9X0jPU6neEKoifzeOrv8BYno8tKG70Js9SAN7Mti', 'employee', 'anai', 'joshy', 'anaij@mail.com', '1234567890', 'address231', '2024-07-01', 'development', 'employee', '2000-02-08', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -223,6 +268,12 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `first_name`, `l
 ALTER TABLE `attendance`
   ADD PRIMARY KEY (`attendance_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `complaints`
+--
+ALTER TABLE `complaints`
+  ADD PRIMARY KEY (`compaint_id`);
 
 --
 -- Indexes for table `leaverequests`
@@ -272,7 +323,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `complaints`
+--
+ALTER TABLE `complaints`
+  MODIFY `compaint_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `leaverequests`
@@ -290,7 +347,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `salaries`
 --
 ALTER TABLE `salaries`
-  MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -302,7 +359,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
