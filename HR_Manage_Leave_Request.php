@@ -57,6 +57,18 @@ $result = $conn->query($sql);
     <title>HR Leave Requests Approval</title>
 </head>
 <body>
+<header>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
+    <div>
+    <div class="navigation-cont">
+        <a class="navigation-link" href="hr-dashboard.php">Home</a>
+        <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
+      </div>
+    </div>
+  </nav>
+</header>
     <h2>Leave Requests Approved by Project Manager</h2>
     <table border="1">
         <tr>

@@ -93,6 +93,7 @@ if(isset($_SESSION['user_id'])) {
 
     <div class="emp_box_right">
     <a href="generatepdf.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Generate Payslip</a>
+    <a href="raise_complaint.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Raise Complaint</a>
           
     <!-- <button class="pay_btn">Punch In</button>
     <button class="pay_btn">Punch Out</button> -->

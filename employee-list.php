@@ -49,16 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <header>
-    <nav class="navigation">
-        <a class="navigation-logo" href="#">Smart Employee</a>
-        <div class="navigation-cont">
-            <a class="navigation-link" href="employee-list.php">Home</a>
-            <a class="navigation-link" href="complaint-list.php">Complaint List</a>
-            <a class="navigation-link" href="management.php">Create Project</a>
-            <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
-            <a class="navigation-link" href="logout.php">Logout</a>
-        </div>
-    </nav>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
+    <div>
+    <div class="navigation-cont">
+        <a class="navigation-link" href="hr-dashboard.php">Home</a>
+        <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
+      </div>
+    </div>
+  </nav>
 </header>
 <main class="container mt-5">
     <h1>Manage Employees</h1>
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td width="10%"><?php echo htmlspecialchars($request['role']); ?></td>
                         <td width="25%"><?php echo htmlspecialchars($request['address']); ?></td>
                         <td width="15%">
-                        <a href="edit_profile.php?eid=<?php echo $request['user_id']; ?>"><button type="button" class="btn btn-success btn-sm mt-2">Edit</button></a>
+                        <a href="edit_profile.php?eid=<?php echo $request['user_id']; ?>&from=employee-list"><button type="button" class="btn btn-success btn-sm mt-2">Edit</button></a>
                         <!-- <button type="button" class="btn btn-danger btn-sm mt-2" onclick="deleteEmployee('<?php echo $request['user_id']; ?>')">Delete</button> -->
                         </td>
                     </tr>
