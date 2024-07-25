@@ -19,7 +19,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Smart Employee | Project Manager Dashboard</title>
+  <title>Smart Employee | HR Manager Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -29,7 +29,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
   <nav class="navigation">
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-    <div class="navigation-cont">
+      <div class="navigation-cont">
         <a class="navigation-link" href="hr-dashboard.php">Home</a>
         <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
@@ -63,7 +63,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
             <label>Designation:</label>
             <p><?php echo htmlspecialchars($prof_details['job_title']); ?></p>
           </div>
-          <a href="edit_profile.php" class="editbutton">Edit profile</a>
+          <a href="edit_profile.php?redirect=hr-dashboard" class="editbutton">Edit profile</a>
         </div>
       </div>
     </div>
@@ -97,8 +97,6 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
               </div>
             </a>
         </div>
-        
-        
     </div>
   </div>
 </main>

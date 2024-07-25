@@ -40,7 +40,6 @@
     {
       $emp_id = $_SESSION['user_id'];
     }
-    
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
@@ -49,18 +48,22 @@
         $address = $_POST['address'];
         $email = $_POST['email'];
         $job_title = $_POST['job_title'];
+        $redirect = $_POST['redirect'];
 
         // Update profile in the database
         $sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, email = ?, job_title = ? WHERE user_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$first_name, $last_name, $address, $email, $job_title, $emp_id]);
-        if($emp_id !=  "")
-        {
-          header('Location: employee-list.php?update=success');
-        }
-        else
-        {
-          header('Location: employee-list.php?update=success');
+        
+        // Redirect based on the source page
+        if ($redirect === 'employee-list') {
+            header('Location: employee-list.php?update=success');
+        } elseif ($redirect === 'hr-dashboard') {
+            header('Location: hr-dashboard.php?update=success');
+        } elseif ($redirect === 'projectmanager') {
+            header('Location: projectmanager.php?update=success');
+        } else {
+            header('Location: hr-dashboard.php?update=success'); // Default redirect
         }
         exit;
     }
@@ -92,7 +95,8 @@
       <div>
         <label for="job_title">Job Title:</label>
         <input type="text" id="job_title" name="job_title" value="<?php echo htmlspecialchars($user['job_title']); ?>" required>
-        <input type="hidden" id="eid" name="eid" value="<?php echo @$_REQUEST['eid']; ?>">
+        <input type="hidden" id="eid" name="eid" value="<?php echo htmlspecialchars($user['user_id']); ?>">
+        <input type="hidden" id="redirect" name="redirect" value="<?php echo htmlspecialchars($_REQUEST['redirect'] ?? ''); ?>">
       </div>
       <div>
         <button type="submit">Save Changes</button>

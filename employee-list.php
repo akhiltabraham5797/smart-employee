@@ -1,8 +1,7 @@
 <?php
 require_once 'db_connection.php';
 
-$sql = "SELECT * FROM users order by first_name";
-
+$sql = "SELECT * FROM users ORDER BY first_name";
 $stmt = $pdo->query($sql);
 $leave_requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -41,18 +40,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         {
             if(confirm("Are you sure you want to delete employee?"))
             {
-                
+                // Add deletion logic here
             }   
         }
     </script>
-    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header>
   <nav class="navigation">
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-    <div class="navigation-cont">
+      <div class="navigation-cont">
         <a class="navigation-link" href="hr-dashboard.php">Home</a>
         <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
         <a class="navigation-link" href="logout.php">Logout</a>
@@ -74,26 +72,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th>Last Name</th>
                 <th>Email ID</th>
                 <th>Job Title</th>
-                <th>address</th>
+                <th>Address</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php if (empty($leave_requests)): ?>
                 <tr>
-                    <td colspan="6" class="text-center">No leave requests found.</td>
+                    <td colspan="6" class="text-center">No employees found.</td>
                 </tr>
             <?php else: ?>
                 <?php foreach ($leave_requests as $request): ?>
                     <tr>
-                        <td width="15%"><?php echo htmlspecialchars($request['first_name']); ?></td>
-                        <td width="15%"><?php echo htmlspecialchars($request['last_name']); ?></td>
-                        <td width="15%"><?php echo htmlspecialchars($request['email']); ?></td>
-                        <td width="10%"><?php echo htmlspecialchars($request['role']); ?></td>
-                        <td width="25%"><?php echo htmlspecialchars($request['address']); ?></td>
-                        <td width="15%">
-                        <a href="edit_profile.php?eid=<?php echo $request['user_id']; ?>"><button type="button" class="btn btn-success btn-sm mt-2">Edit</button></a>
-                        <!-- <button type="button" class="btn btn-danger btn-sm mt-2" onclick="deleteEmployee('<?php echo $request['user_id']; ?>')">Delete</button> -->
+                        <td><?php echo htmlspecialchars($request['first_name']); ?></td>
+                        <td><?php echo htmlspecialchars($request['last_name']); ?></td>
+                        <td><?php echo htmlspecialchars($request['email']); ?></td>
+                        <td><?php echo htmlspecialchars($request['role']); ?></td>
+                        <td><?php echo htmlspecialchars($request['address']); ?></td>
+                        <td>
+                            <a href="edit_profile.php?eid=<?php echo $request['user_id']; ?>&redirect=employee-list">
+                                <button type="button" class="btn btn-success btn-sm mt-2">Edit</button>
+                            </a>
+                            <!-- <button type="button" class="btn btn-danger btn-sm mt-2" onclick="deleteEmployee('<?php echo $request['user_id']; ?>')">Delete</button> -->
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -103,4 +103,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </main>
 </body>
 </html>
-

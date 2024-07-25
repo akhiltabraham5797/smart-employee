@@ -29,7 +29,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
   <nav class="navigation">
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-    <div class="navigation-cont">
+      <div class="navigation-cont">
         <a class="navigation-link" href="projectmanager.php">Home</a>
         <a class="navigation-link" href="management.php">Create Project</a>
         <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
@@ -64,7 +64,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
             <label>Designation:</label>
             <p><?php echo htmlspecialchars($prof_details['job_title']); ?></p>
           </div>
-          <a href="edit_profile.php" class="editbutton">Edit profile</a>
+          <a href="edit_profile.php?redirect=projectmanager" class="editbutton">Edit profile</a>
         </div>
       </div>
     </div>
