@@ -39,58 +39,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         $totalHours = calculateTotalHours($pdo, $userId, $startDate, $endDate);
-
-
         $hourlyRate = getHourlyRate($pdo, $userId);
         $amount = round($hourlyRate * $totalHours, 2); 
         $stmt = $pdo->prepare("INSERT INTO salaries (user_id, amount, payment_date, pay_period_start, pay_period_end, hourly_rate, total_hours) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $paymentDate = date('Y-m-d');
         $stmt->execute([$userId, $amount, $paymentDate, $startDate, $endDate, $hourlyRate, $totalHours]);
 
-        echo "<h2>Salary Slip</h2>";
-        echo "User ID: $userId<br>";
-        echo "Start Date: $startDate<br>";
-        echo "End Date: $endDate<br>";
-        echo "Total Hours Worked: " . round($totalHours, 2) . "<br>";
-        echo "Hourly Rate: $" . round($hourlyRate, 2) . "<br>"; 
-        echo "Amount: $" . round($amount, 2) . "<br>";
-        // echo "Payment Date: $paymentDate<br>";
+        $salaryDetails = [
+            'userId' => $userId,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'totalHours' => $totalHours,
+            'hourlyRate' => $hourlyRate,
+            'amount' => $amount,
+            'paymentDate' => $paymentDate,
+        ];
 
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        $error = "Error: " . $e->getMessage();
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HR View Employee Hours and Salary</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .salary_generation-form {
+            display: flex;
+            justify-content: center;
+        }
+
+        .salary_generation-form div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .salary_generation-form label, 
+        .salary_generation-form input[type="date"], 
+        .salary_generation-form input[type="submit"] {
+            margin: 5px 0;
+            padding: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .salary_generation-form input[type="submit"] {
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
+<body class="index-page">
 <header>
-    <nav class="navigation">
-        <a class="navigation-logo" href="#">Smart Employee</a>
-        <div class="navigation-cont">
-            <a class="navigation-link" href="hr-dashboard.php">Home</a>
-            <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
-            <a class="navigation-link" href="hr_view_hours_salary.php">View Hours & Salary</a>
-            <a class="navigation-link" href="logout.php">Logout</a>
-        </div>
-    </nav>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
+    <div>
+      <div class="navigation-cont">
+        <a class="navigation-link" href="employee-dashboard.php">Home</a>
+        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
+        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
+      </div>
+    </div>
+  </nav>
 </header>
-<body>
+<main>
     <h2>Generate Salary Slip</h2>
-    <form method="POST" action="">
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date" required>
-        <br>
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date" required>
-        <br>
-        <input type="submit" value="Generate">
+    <form class="salary_generation-form" method="POST" action="">
+        <div>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <br>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+            <br>
+            <input type="submit" value="Generate">
+        </div>
     </form>
+
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($error)) {
+            echo "<p>$error</p>";
+        } else {
+            echo "<h2>Salary Slip</h2>";
+            echo "User ID: {$salaryDetails['userId']}<br>";
+            echo "Start Date: {$salaryDetails['startDate']}<br>";
+            echo "End Date: {$salaryDetails['endDate']}<br>";
+            echo "Total Hours Worked: " . round($salaryDetails['totalHours'], 2) . "<br>";
+            echo "Hourly Rate: $" . round($salaryDetails['hourlyRate'], 2) . "<br>"; 
+            echo "Amount: $" . round($salaryDetails['amount'], 2) . "<br>";
+            echo "Payment Date: {$salaryDetails['paymentDate']}<br>";
+        }
+    }
+    ?>
+</main>
 </body>
 </html>
+
+
