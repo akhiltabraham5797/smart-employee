@@ -12,14 +12,17 @@ $leave_requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    session_start(); // Start the session to access session variables
     $leave_id = $_POST['leave_id'];
     $status = $_POST['status'];
     $description = $_POST['description'];
+    $approved_by = $_SESSION["user_id"]; // Assuming manager's user_id is stored in session
 
-    $update_sql = "UPDATE LeaveRequests SET status = :status, description = :description WHERE leave_id = :leave_id";
+    $update_sql = "UPDATE LeaveRequests SET status = :status, description = :description, approved_by = :approved_by WHERE leave_id = :leave_id";
     $stmt = $pdo->prepare($update_sql);
     $stmt->bindParam(':status', $status);
     $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':approved_by', $approved_by);
     $stmt->bindParam(':leave_id', $leave_id);
 
     if ($stmt->execute()) {
@@ -44,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('status-' + leaveId).value = status;
         }
     </script>
-    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header>
@@ -110,4 +112,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </main>
 </body>
 </html>
-
