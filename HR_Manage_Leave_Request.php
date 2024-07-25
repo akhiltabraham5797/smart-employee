@@ -102,8 +102,8 @@ $result = $conn->query($sql);
                     echo "<td>
                             <form method='post' action=''>
                                 <input type='hidden' name='leave_id' value='" . $row['leave_id'] . "'>
-                                <button type='submit' name='action' value='approve'>Approve</button>
-                                <button type='submit' name='action' value='reject'>Reject</button>
+                                <button type='submit' name='action' value='approve' class='btn btn-success btn-sm mt-2'>Approve</button>
+                                <button type='submit' name='action' value='reject' class='sbtn btn-danger btn-sm mt-2'>Reject</button>
                             </form>
                         </td>";
                     echo "</tr>";

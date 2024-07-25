@@ -1042,3 +1042,6 @@ select[multiple] option {
 .hr_leave{
     margin: 40px;
 }
+.hr_leave_table form{
+    margin-top: 0;
+}
