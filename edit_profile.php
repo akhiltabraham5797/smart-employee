@@ -62,7 +62,11 @@
             header('Location: hr-dashboard.php?update=success');
         } elseif ($redirect === 'projectmanager') {
             header('Location: projectmanager.php?update=success');
-        } else {
+        } 
+        elseif ($redirect === 'employee-dashboard') {
+          header('Location: employee-dashboard.php?update=success');
+        }
+        else {
             header('Location: hr-dashboard.php?update=success'); // Default redirect
         }
         exit;
