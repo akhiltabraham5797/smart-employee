@@ -1047,3 +1047,48 @@ select[multiple] option {
 }
 
 
+/* Salary Generation */
+.salary-page h1{
+    text-align: center;
+}
+.salary_container{
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: ghostwhite;
+}
+.salary_box{
+    width: 60%;
+}
+.salary_display{
+    width: 40%;
+}
+.salary_generation-form {
+    display: flex;
+    justify-content: center;
+}
+
+.salary_generation-form div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.salary_generation-form label, 
+.salary_generation-form input[type="date"], 
+.salary_generation-form input[type="submit"] {
+    margin: 5px 0;
+    padding: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.salary_generation-form input[type="submit"] {
+    cursor: pointer;
+}

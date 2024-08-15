@@ -125,7 +125,7 @@ if(isset($_POST['submit']))
 
 
     <h1>Cart Checkout</h1>
-    <form method="POST" action="">
+    <form method="POST" action="confirmation.php">
       <div>
         <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" value="" required>
