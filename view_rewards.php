@@ -74,8 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </nav>
 </header>
-<main>
-<div class="leavecontainer leave-application-container">
+<main class="rewards">
+<div class="reward_container">
 <h2>Your Reward Points</h2>
 
 <?php

@@ -88,30 +88,28 @@ if(isset($_POST['submit'])) {
     <?php if($_SESSION["role"] == "HR"){ ?>
     <div class="navigation-cont">
         <a class="navigation-link" href="hr-dashboard.php">Home</a>
-        <a class="navigation-link" href="products.php">Shopping</a>
         <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
+        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
-    <?php } elseif($_SESSION["role"] == "project manager"){ ?>
+    <?php } else if($_SESSION["role"] == "project manager"){ ?>
     <div class="navigation-cont">
         <a class="navigation-link" href="projectmanager.php">Home</a>
         <a class="navigation-link" href="management.php">Create Project</a>
-        <a class="navigation-link" href="products.php">Shopping</a>
         <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
+        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
-    <?php } elseif($_SESSION["role"] == "employee"){ ?>
+    <?php } else if($_SESSION["role"] == "employee"){ ?>
         <div class="navigation-cont">
         <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
-        <a class="navigation-link" href="products.php">Shopping</a>
+        <a class="navigation-link" href="edit_profile.php">Edit Profile</a>
         <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
         <a class="navigation-link" href="salary_generation.php">Pay Details</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     <?php } ?>
-    </div>
   </nav>
 </header>
 

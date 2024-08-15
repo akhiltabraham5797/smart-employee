@@ -1057,6 +1057,7 @@ select[multiple] option {
     display: flex;
     justify-content: space-evenly;
     background-color: ghostwhite;
+    padding: 30px;
 }
 .salary_box{
     width: 60%;
@@ -1091,4 +1092,29 @@ select[multiple] option {
 
 .salary_generation-form input[type="submit"] {
     cursor: pointer;
+}
+.field_wrap{
+    display: flex;
+    margin-bottom: 20px;
+}
+.field_wrap label{
+    width: 30%;
+    margin-right: 10px;
+}
+.field_wrap input,select{
+    height: 30px;
+    width: 70%;
+    max-width: 200px;
+}
+
+/* Rewards css */
+.reward_container{
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 100%;
 }

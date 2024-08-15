@@ -76,7 +76,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
         $proj_data->execute();
         while ($proj_details = $proj_data->fetch(PDO::FETCH_ASSOC)) {
         ?>
-          <a href="project_tracking.php?project_id=<?php echo $proj_details['project_id']; ?>" class="emp_task_box">
+          <a href="Admin_project_tracking.php?project_id=<?php echo $proj_details['project_id']; ?>" class="emp_task_box">
             <div>
               <h4><?php echo htmlspecialchars($proj_details['project_name']); ?></h4>
               <p class="mb-0"><?php echo htmlspecialchars($proj_details['description']); ?></p>
