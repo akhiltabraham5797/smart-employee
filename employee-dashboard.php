@@ -18,7 +18,7 @@ if(isset($_SESSION['user_id'])) {
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <?php
-  $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id=$emp_id");
+  $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id= $emp_id");
   $profile_data->execute();
   if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
   ?>
@@ -29,7 +29,8 @@ if(isset($_SESSION['user_id'])) {
     <div>
       <div class="navigation-cont">
         <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
+        <a class="navigation-link" href="edit_profile.php">Edit Profile</a>
+        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
         <a class="navigation-link" href="salary_generation.php">Pay Details</a>
         <a class="navigation-link" href="logout.php">Logout</a>
@@ -93,7 +94,6 @@ if(isset($_SESSION['user_id'])) {
     </div>
 
     <div class="emp_box_right">
-    <a href="generatepdf.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Generate Payslip</a>
     <a href="raise_complaint.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Raise Complaint</a>
           
     <!-- <button class="pay_btn">Punch In</button>

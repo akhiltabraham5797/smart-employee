@@ -1,6 +1,10 @@
 <?php
 session_start();
 include 'db_connection.php';
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    $emp_id = $_SESSION['user_id'];
+}
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -66,45 +70,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>HR View Employee Hours and Salary</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        .salary_generation-form {
-            display: flex;
-            justify-content: center;
-        }
-
-        .salary_generation-form div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .salary_generation-form label, 
-        .salary_generation-form input[type="date"], 
-        .salary_generation-form input[type="submit"] {
-            margin: 5px 0;
-            padding: 6px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .salary_generation-form input[type="submit"] {
-            cursor: pointer;
-        }
-    </style>
 </head>
-<body class="index-page">
+<body class="salary-page">
 <header>
   <nav class="navigation">
     <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
       <div class="navigation-cont">
         <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
+        <a class="navigation-link" href="edit_profile.php">Edit Profile</a>
         <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
@@ -112,35 +86,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </nav>
 </header>
 <main>
-    <h2>Generate Salary Slip</h2>
-    <form class="salary_generation-form" method="POST" action="">
-        <div>
-            <label for="start_date">Start Date:</label>
-            <input type="date" id="start_date" name="start_date" required>
-            <br>
-            <label for="end_date">End Date:</label>
-            <input type="date" id="end_date" name="end_date" required>
-            <br>
-            <input type="submit" value="Generate">
+<h1>Generate Salary Slip</h1>
+    <div class="salary_container">
+        <div class="salary_box">
+            <form class="salary_generation-form" method="POST" action="">
+            <div>
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required>
+                <br>
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" required>
+                <br>
+                <input type="submit" value="Salary Details">
+                <?php
+                $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id=$emp_id");
+                $profile_data->execute();
+                if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                    <a href="generatepdf.php?id=<?php echo $prof_details['user_id'];?>" class="pay_btn">Generate Payslip</a>
+                <?php } ?>
+            </div>
+            </form>
         </div>
-    </form>
-
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($error)) {
-            echo "<p>$error</p>";
-        } else {
-            echo "<h2>Salary Slip</h2>";
-            echo "User ID: {$salaryDetails['userId']}<br>";
-            echo "Start Date: {$salaryDetails['startDate']}<br>";
-            echo "End Date: {$salaryDetails['endDate']}<br>";
-            echo "Total Hours Worked: " . round($salaryDetails['totalHours'], 2) . "<br>";
-            echo "Hourly Rate: $" . round($salaryDetails['hourlyRate'], 2) . "<br>"; 
-            echo "Amount: $" . round($salaryDetails['amount'], 2) . "<br>";
-            echo "Payment Date: {$salaryDetails['paymentDate']}<br>";
+        <div class="salary_display">
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($error)) {
+                echo "<p>$error</p>";
+            } else {
+                echo "<h2>Salary Details</h2>";
+                echo "User ID: {$salaryDetails['userId']}<br>";
+                echo "Start Date: {$salaryDetails['startDate']}<br>";
+                echo "End Date: {$salaryDetails['endDate']}<br>";
+                echo "Total Hours Worked: " . round($salaryDetails['totalHours'], 2) . "<br>";
+                echo "Hourly Rate: $" . round($salaryDetails['hourlyRate'], 2) . "<br>"; 
+                echo "Amount: $" . round($salaryDetails['amount'], 2) . "<br>";
+                echo "Payment Date: {$salaryDetails['paymentDate']}<br>";
+            }
         }
-    }
-    ?>
+        ?>
+        </div>
+    </div>
 </main>
 </body>
 </html>

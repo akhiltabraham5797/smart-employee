@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div>
       <div class="navigation-cont">
         <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="userProfile.php">Edit Profile</a>
+        <a class="navigation-link" href="edit_profile.php">Edit Profile</a>
         <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
