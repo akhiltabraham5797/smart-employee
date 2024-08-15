@@ -1,28 +1,30 @@
 <?php
+require_once('db_connection.php');
 session_start();
-include 'db_connection.php';
 
 // Check if the user is logged in
-if (!isset($_SESSION["user_id"])) {
-    header("Location: login.php");
-    exit();
+if (isset($_SESSION['user_id'])) {
+    $emp_id = $_SESSION['user_id'];
+} else {
+    header('Location: login.php');
+    exit;
 }
 
-$userId = $_SESSION["user_id"];
 
 // Fetch the total points and total redeemed cash for the logged-in user
 try {
     $stmt = $pdo->prepare("SELECT points, redeemed_cash FROM rewards WHERE user_id = ?");
-    $stmt->execute([$userId]);
+    $stmt->execute([$emp_id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result) {
         $totalPoints = $result['points'];
         $totalRedeemedCash = $result['redeemed_cash'];
-    } else {
-        $totalPoints = 0;
-        $totalRedeemedCash = 0;
-    }
+    } 
+    // else {
+    //     $totalPoints = 0;
+    //     $totalRedeemedCash = 0;
+    // }
 } catch (Exception $e) {
     $error = "Error: " . $e->getMessage();
 }
@@ -34,14 +36,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate input
     if ($redeemPoints > $totalPoints) {
         $error = "You do not have enough points to redeem.";
-    } else {
+    }
+    else {
         try {
             // Deduct points and update the redeemed cash
             $newPoints = $totalPoints - $redeemPoints;
             $newRedeemedCash = $totalRedeemedCash + $redeemPoints;
 
             $stmt = $pdo->prepare("UPDATE rewards SET points = ?, redeemed_cash = ? WHERE user_id = ?");
-            $stmt->execute([$newPoints, $newRedeemedCash, $userId]);
+            $stmt->execute([$newPoints, $newRedeemedCash, $emp_id]);
 
             $totalPoints = $newPoints;
             $totalRedeemedCash = $newRedeemedCash;

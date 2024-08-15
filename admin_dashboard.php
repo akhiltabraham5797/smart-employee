@@ -31,7 +31,7 @@ if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
     <div>
       <div class="navigation-cont">
         <a class="navigation-link" href="projectmanager.php">Home</a>
-        <a class="navigation-link" href="">Rewards</a>
+        <a class="navigation-link" href="appreciation_rewards.php">Rewards</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
