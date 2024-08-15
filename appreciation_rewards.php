@@ -1,11 +1,21 @@
 <?php
+require_once('db_connection.php');
 session_start();
-include 'db_connection.php';
 
-if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== 'admin') {
-    header("Location: login.php");
-    exit();
+// Check if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    $emp_id = $_SESSION['user_id'];
+} else {
+    header('Location: login.php');
+    exit;
 }
+// session_start();
+// include 'db_connection.php';
+
+// if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== 'admin') {
+//     header("Location: login.php");
+//     exit();
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['user_id'];
