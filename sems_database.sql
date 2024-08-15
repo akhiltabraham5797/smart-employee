@@ -68,6 +68,8 @@ INSERT INTO `categories` (`category_id`, `category_name`, `category_shortcode`, 
 (2, 'Smart Watches', 'SM', '2024-08-14 14:40:18'),
 (3, 'Pen Drives', 'PD', '2024-08-14 14:40:26');
 
+
+
 -- --------------------------------------------------------
 
 --
