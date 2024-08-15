@@ -216,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php else: ?>
                 <?php foreach ($leave_requests as $request): ?>
                     <tr>
-                        <td width="15%"><img src="product_images/<?php echo htmlspecialchars($request['product_image']); ?>" width="80px"  height="50px" /></td>
+                    <td width="15%"><img src="assets/images/<?php echo htmlspecialchars($request['product_image']); ?>" width="80px" height="50px" /></td>
                         <td width="10%"><?php echo htmlspecialchars($request['product_code']); ?></td>
                         <td width="20%"><?php echo htmlspecialchars($request['product_name']); ?></td>
                         <td width="15%"><?php echo htmlspecialchars($request['category_name']); ?></td>
