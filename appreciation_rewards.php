@@ -11,18 +11,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['user_id'];
     $points = $_POST['points'];
     $note = $_POST['note'];
-    $awardedBy = $_SESSION["user_id"]; // Admin ID stored as user_id
+    $awardedBy = $_SESSION["user_id"];
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO rewards (user_id, points, appreciation_note, awarded_by) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$userId, $points, $note, $awardedBy]);
-        $success = "Reward points and appreciation note have been successfully awarded.";
+        
+        $checkStmt = $pdo->prepare("SELECT * FROM rewards WHERE user_id = ?");
+        $checkStmt->execute([$userId]);
+        $existingReward = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($existingReward) {
+            
+            $stmt = $pdo->prepare("UPDATE rewards SET points = points + ?, appreciation_note = ? WHERE user_id = ?");
+            $stmt->execute([$points, $note, $userId]);
+            $success = "Reward points and appreciation note have been successfully updated.";
+        } else {
+            
+            $stmt = $pdo->prepare("INSERT INTO rewards (user_id, points, appreciation_note, awarded_by) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$userId, $points, $note, $awardedBy]);
+            $success = "Reward points and appreciation note have been successfully awarded.";
+        }
     } catch (Exception $e) {
         $error = "Error: " . $e->getMessage();
     }
 }
 
-// Fetch all users for the dropdown
+
 $usersStmt = $pdo->query("SELECT user_id, first_name FROM users");
 $users = $usersStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
