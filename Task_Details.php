@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="status">Task Status:</label>
                 <select id="status" name="status" required>
                     <option value="Completed" <?php if ($task['status'] == 'Completed') echo 'selected'; ?>>Completed</option>
-                    <option value="In Progress" <?php if ($task['status'] == 'Pending') echo 'selected'; ?>>In Progress</option>
+                    <option value="In Progress" <?php if ($task['status'] == 'In Progress') echo 'selected'; ?>>In Progress</option>
                     <option value="Not Completed" <?php if ($task['status'] == 'Not Completed') echo 'selected'; ?>>Not Completed</option>
                 </select>
 
