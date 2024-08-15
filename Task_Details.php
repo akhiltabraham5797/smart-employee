@@ -49,14 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="index-page">
 <header>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Smart Employee</a>
+  <nav class="navigation">
+    <a class="navigation-logo" href="#">Smart Employee</a>
     <div>
-      <div class="navbar-nav flex-row">
-        <a class="nav-item nav-link active px-2" href="employee-dashboard.php">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link px-2" href="userProfile.php?id=<?php echo $prof_details['user_id']; ?>">Edit Profile</a>
-        <a class="nav-item nav-link px-2" href="Leave_Application.php?id=<?php echo $prof_details['user_id']; ?>">Leave Application</a>
-        <a class="nav-item nav-link px-2" href="logout.php">Logout</a>
+      <div class="navigation-cont">
+        <a class="navigation-link" href="employee-dashboard.php">Home</a>
+        <a class="navigation-link" href="edit_profile.php">Edit Profile</a>
+        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
+        <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
   </nav>

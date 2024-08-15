@@ -18,7 +18,7 @@ if(isset($_SESSION['user_id'])) {
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <?php
-  $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id=$emp_id");
+  $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id= $emp_id");
   $profile_data->execute();
   if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
   ?>
