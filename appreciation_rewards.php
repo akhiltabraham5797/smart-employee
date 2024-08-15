@@ -62,8 +62,8 @@ $users = $usersStmt->fetchAll(PDO::FETCH_ASSOC);
     <nav class="navigation">
         <a class="navigation-logo" href="#">Smart Employee</a>
         <div class="navigation-cont">
-            <a class="navigation-link" href="admin-dashboard.php">Home</a>
-            <a class="navigation-link" href="admin_rewards.php">Award Points</a>
+            <a class="navigation-link" href="admin_dashboard.php">Home</a>
+            <a class="navigation-link" href="appreciation_rewards.php">Rewards</a>
             <a class="navigation-link" href="logout.php">Logout</a>
         </div>
     </nav>

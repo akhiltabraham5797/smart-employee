@@ -8,21 +8,6 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="index-page emp_dashboard">
-<header>
-  <nav class="navigation">
-    <a class="navigation-logo" href="#">Smart Employee</a>
-    <div>
-      <div class="navigation-cont">
-        <a class="navigation-link" href="employee-dashboard.php">Home</a>
-        <a class="navigation-link" href="edit_profile.php">Edit Profile</a>
-        <a class="navigation-link" href="products.php">Shoping</a>
-        <a class="navigation-link" href="Leave_Application.php">Leave Application</a>
-        <a class="navigation-link" href="salary_generation.php">Pay Details</a>
-        <a class="navigation-link" href="logout.php">Logout</a>
-      </div>
-    </div>
-  </nav>
-</header>
 
     <div class="container2">
         <div class="box">

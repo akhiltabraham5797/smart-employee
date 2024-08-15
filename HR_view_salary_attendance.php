@@ -45,37 +45,6 @@ $employees = fetchEmployees($pdo);
     <meta charset="UTF-8">
     <title>HR View Employee Hours and Salary</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        .salary_view-form {
-            display: flex;
-            justify-content: center;
-        }
-
-        .salary_view-form div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .salary_view-form label, 
-        .salary_view-form select, 
-        .salary_view-form input[type="date"], 
-        .salary_view-form input[type="submit"] {
-            margin: 5px 0;
-            padding: 6px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .salary_view-form input[type="submit"] {
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
 <header>
@@ -89,50 +58,57 @@ $employees = fetchEmployees($pdo);
     </nav>
 </header>
 <main>
-    <h2>View Employee Hours and Salary</h2>
-    <form class="salary_view-form" method="POST" action="">
-        <div>
-            <label for="user_id">Select Employee:</label>
-            <select id="user_id" name="user_id" required>
-                <?php foreach ($employees as $employee): ?>
-                    <option value="<?= $employee['user_id'] ?>"><?= $employee['first_name'] . ' ' . $employee['last_name'] ?></option>
-                <?php endforeach; ?>
-            </select>
-            <br>
-            <label for="start_date">Start Date:</label>
-            <input type="date" id="start_date" name="start_date" required>
-            <br>
-            <label for="end_date">End Date:</label>
-            <input type="date" id="end_date" name="end_date" required>
-            <br>
-            <input type="submit" value="View Details">
+    <h1 style="text-align:center;">View Employee Hours and Salary</h1>
+    <div class="salary_container">
+        <div class="salary_box">
+            <form class="salary_view-form" method="POST" action="">
+                <div class="field_wrap">
+                    <label for="user_id">Select Employee:</label>
+                    <select id="user_id" name="user_id" required>
+                        <?php foreach ($employees as $employee): ?>
+                            <option value="<?= $employee['user_id'] ?>"><?= $employee['first_name'] . ' ' . $employee['last_name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div> 
+                <div class="field_wrap">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" required>
+                </div> 
+                <div class="field_wrap">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" required>
+                </div> 
+                    <input type="submit" value="View Details">
+                
+            </form>
         </div>
-    </form>
+        <div class="salary_display">
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $userId = $_POST["user_id"];
+            $startDate = $_POST["start_date"];
+            $endDate = $_POST["end_date"];
 
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $userId = $_POST["user_id"];
-        $startDate = $_POST["start_date"];
-        $endDate = $_POST["end_date"];
+            try {
+                $totalHours = calculateTotalHours($pdo, $userId, $startDate, $endDate);
+                $hourlyRate = getHourlyRate($pdo, $userId);
+                $amount = round($hourlyRate * $totalHours, 2);
 
-        try {
-            $totalHours = calculateTotalHours($pdo, $userId, $startDate, $endDate);
-            $hourlyRate = getHourlyRate($pdo, $userId);
-            $amount = round($hourlyRate * $totalHours, 2);
+                echo "<h2>Employee Work and Salary Details</h2>";
+                echo "User ID: $userId<br>";
+                echo "Start Date: $startDate<br>";
+                echo "End Date: $endDate<br>";
+                echo "Total Hours Worked: $totalHours<br>";
+                echo "Hourly Rate: $$hourlyRate<br>";
+                echo "Amount: $$amount<br>";
 
-            echo "<h2>Employee Work and Salary Details</h2>";
-            echo "User ID: $userId<br>";
-            echo "Start Date: $startDate<br>";
-            echo "End Date: $endDate<br>";
-            echo "Total Hours Worked: $totalHours<br>";
-            echo "Hourly Rate: $$hourlyRate<br>";
-            echo "Amount: $$amount<br>";
-
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
         }
-    }
-    ?>
+        ?>
+        </div>
+    </div>
 </main>
 </body>
 </html>

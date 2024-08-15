@@ -134,8 +134,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php if($_SESSION["role"] == "HR"){ ?>
     <div class="navigation-cont">
         <a class="navigation-link" href="hr-dashboard.php">Home</a>
-        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="HR_Manage_Leave_Request.php">Leave Approval</a>
+        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     </div>
@@ -143,8 +143,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="navigation-cont">
         <a class="navigation-link" href="projectmanager.php">Home</a>
         <a class="navigation-link" href="management.php">Create Project</a>
-        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="Manage_Leave_Requests.php">Leave Approval</a>
+        <a class="navigation-link" href="products.php">Shoping</a>
         <a class="navigation-link" href="logout.php">Logout</a>
       </div>
     <?php } else if($_SESSION["role"] == "employee"){ ?>
@@ -216,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php else: ?>
                 <?php foreach ($leave_requests as $request): ?>
                     <tr>
-                        <td width="15%"><img src="product_images/<?php echo htmlspecialchars($request['product_image']); ?>" width="80px"  height="50px" /></td>
+                    <td width="15%"><img src="assets/images/<?php echo htmlspecialchars($request['product_image']); ?>" width="80px" height="50px" /></td>
                         <td width="10%"><?php echo htmlspecialchars($request['product_code']); ?></td>
                         <td width="20%"><?php echo htmlspecialchars($request['product_name']); ?></td>
                         <td width="15%"><?php echo htmlspecialchars($request['category_name']); ?></td>
