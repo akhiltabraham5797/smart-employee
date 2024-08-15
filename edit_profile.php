@@ -67,6 +67,9 @@
             // Redirect to the appropriate dashboard based on the role
             $role = $user_details['role'];
             switch ($role) {
+              case 'Admin':
+                header("Location: admin_dashboard.php");
+                break;
                 case 'HR':
                     header("Location: hr-dashboard.php");
                     break;
