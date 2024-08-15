@@ -2,6 +2,11 @@
 session_start();
 require_once('db_connection.php');
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 global $emp_id;
 
 if (isset($_SESSION['user_id'])) {
@@ -136,22 +141,22 @@ function assignTaskAll($pdo) {
     $project_id = $_POST['project_id'];
     $response = array();
 
-    $sql = "SELECT user_id FROM project_employees WHERE project_id = :project_id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':project_id', $project_id);
-    $stmt->execute();
-    $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $sql = "SELECT user_id FROM users WHERE project_id = :project_id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':project_id', $project_id);
+        $stmt->execute();
+        $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($employees as $employee) {
-        $user_id = $employee['user_id'];
-        $task_name = $_POST["task_name_$user_id"];
-        $task_description = $_POST["task_description_$user_id"];
-        $task_start_date = $_POST["task_start_date_$user_id"];
-        $task_end_date = $_POST["task_end_date_$user_id"];
+        foreach ($employees as $employee) {
+            $user_id = $employee['user_id'];
+            $task_name = $_POST["task_name_$user_id"];
+            $task_description = $_POST["task_description_$user_id"];
+            $task_start_date = $_POST["task_start_date_$user_id"];
+            $task_end_date = $_POST["task_end_date_$user_id"];
 
-        try {
-            $sql_task = "INSERT INTO tasks (project_id, user_id, task_name, description, start_date, end_date, status) 
-                         VALUES (:project_id, :user_id, :task_name, :description, :start_date, :end_date, 'Not Started')";
+            $sql_task = "INSERT INTO tasks (project_id, assigned_to, task_name, description, start_date, end_date, status) 
+                         VALUES (:project_id, :user_id, :task_name, :description, :start_date, :end_date, 'Pending')";
             $stmt_task = $pdo->prepare($sql_task);
             $stmt_task->bindParam(':project_id', $project_id);
             $stmt_task->bindParam(':user_id', $user_id);
@@ -160,18 +165,19 @@ function assignTaskAll($pdo) {
             $stmt_task->bindParam(':start_date', $task_start_date);
             $stmt_task->bindParam(':end_date', $task_end_date);
             $stmt_task->execute();
-
-            $response['success'] = 'Tasks assigned successfully.';
-        } catch (PDOException $e) {
-            $response['error'] = 'Error assigning tasks: ' . $e->getMessage();
-            echo json_encode($response);
-            exit;
         }
+
+        $response['success'] = 'Tasks assigned successfully.';
+    } catch (PDOException $e) {
+        $response['error'] = 'Error assigning tasks: ' . $e->getMessage();
     }
 
+    // Ensure proper JSON response
     echo json_encode($response);
     exit;
 }
+
+
 ?>
 
 

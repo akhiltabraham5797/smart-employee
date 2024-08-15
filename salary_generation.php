@@ -99,7 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br>
                 <input type="submit" value="Salary Details">
                 <?php
-                $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id=$emp_id");
+                $profile_data = $pdo->prepare("SELECT * FROM users WHERE user_id = :emp_id");
+                $profile_data->bindParam(':emp_id', $emp_id, PDO::PARAM_INT);
                 $profile_data->execute();
                 if ($prof_details = $profile_data->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -130,5 +131,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </main>
 </body>
 </html>
-
-

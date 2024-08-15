@@ -1,42 +1,58 @@
 <?php
-
+session_start();
 include 'db_connection.php';
 
-$task_id = 1; 
+// Retrieve the logged-in user's ID from the session
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    echo "User is not logged in.";
+    exit;
+}
 
-$sql = "SELECT tasks.task_name, projects.project_name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, users.first_name as project_manager 
+// Query to get the task details for the logged-in user
+$sql = "SELECT tasks.task_id, tasks.task_name, projects.project_name, tasks.description, tasks.start_date, tasks.end_date, tasks.status, users.first_name as project_manager 
         FROM tasks 
         JOIN projects ON tasks.project_id = projects.project_id 
         JOIN users ON projects.user_id = users.user_id 
-        WHERE tasks.task_id = :task_id";
+        WHERE tasks.assigned_to = :user_id";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
 
 if ($stmt->rowCount() > 0) {
     $task = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
-    echo "No task found with the specified ID.";
+    echo "No tasks found for the logged-in user.";
     exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST['status'];
-    $update_sql = "UPDATE tasks SET status=:status WHERE task_id=:task_id";
+    $task_id = $task['task_id'];  // Ensure this gets the correct task ID
 
+    $update_sql = "UPDATE tasks SET status=:status WHERE task_id=:task_id AND assigned_to=:user_id";
+    
     $update_stmt = $pdo->prepare($update_sql);
     $update_stmt->bindParam(':status', $status, PDO::PARAM_STR);
     $update_stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+    $update_stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 
     if ($update_stmt->execute()) {
-        echo "<script>alert('Task status updated successfully');</script>";
+        // Check if any row was actually updated
+        if ($update_stmt->rowCount() > 0) {
+            echo "<script>alert('Task status updated successfully');</script>";
+        } else {
+            echo "<script>alert('Task status not updated. No matching records found.');</script>";
+        }
     } else {
-        echo "<script>alert('Error updating task status: " . $update_stmt->errorInfo()[2] . "');</script>";
+        $errorInfo = $update_stmt->errorInfo();
+        echo "<script>alert('Error updating task status: " . $errorInfo[2] . "');</script>";
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <main class="leavebody">
     <div class="leavecontainer task-details-container">
         <h1>Task Details</h1>
-        <form id="task-details-form" method="post" action="Task_Details.php">
+        <form id="task-details-form" method="post" action="">
             <div class="task-info">
                 <label for="task-name">Task Name:</label>
                 <p id="task-name"><?php echo htmlspecialchars($task['task_name']); ?></p>
@@ -75,25 +91,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="project-name">Project Name:</label>
                 <p id="project-name"><?php echo htmlspecialchars($task['project_name']); ?></p>
                 
-                <label for="task-for-the-day">Task for the Day:</label>
-                <p id="task-for-the-day"><?php echo htmlspecialchars($task['description']); ?></p>
-                
-                <label for="backlog-tasks">Backlog Tasks:</label>
-                <p id="backlog-tasks">Update logo design, Create footer design</p>
-                
-                <label for="to-be-completed">To Be Completed Tasks:</label>
-                <p id="to-be-completed">Finalize home page design, Start about us page</p>
                 
                 <label for="deadline">Deadline:</label>
                 <p id="deadline"><?php echo htmlspecialchars($task['end_date']); ?></p>
                 
                 <label for="notes">Notes:</label>
-                <p id="notes">Ensure the design is mobile-responsive</p>
+                <p id="notes"><?php echo htmlspecialchars($task['description']); ?></p>
 
                 <label for="status">Task Status:</label>
                 <select id="status" name="status" required>
                     <option value="Completed" <?php if ($task['status'] == 'Completed') echo 'selected'; ?>>Completed</option>
-                    <option value="In Progress" <?php if ($task['status'] == 'In Progress') echo 'selected'; ?>>In Progress</option>
+                    <option value="In Progress" <?php if ($task['status'] == 'Pending') echo 'selected'; ?>>In Progress</option>
                     <option value="Not Completed" <?php if ($task['status'] == 'Not Completed') echo 'selected'; ?>>Not Completed</option>
                 </select>
 
@@ -102,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="button" onclick="window.location.href='employee-dashboard.php';">Cancel</button>
                 </div>
             </div>
-            <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($task_id); ?>">
+
         </form>
     </div>
 </main>
