@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2024 at 07:34 AM
+-- Generation Time: Aug 15, 2024 at 04:11 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,8 +57,19 @@ INSERT INTO `attendance` (`attendance_id`, `user_id`, `date`, `work_hours`, `clo
 (14, 14, '2024-07-25', 0, '06:31:39', NULL),
 (15, 16, '2024-07-25', 0, '06:32:13', NULL),
 (16, 15, '2024-07-25', 0, '07:14:52', '14:17:27'),
-(17, 15, '2024-07-25', 0, '07:18:13', NULL),
-(18, 16, '2024-07-25', 0, '07:26:40', NULL);
+(17, 15, '2024-07-25', 0, '07:18:13', '14:43:30'),
+(18, 16, '2024-07-25', 0, '07:26:40', NULL),
+(19, 15, '2024-07-25', 0, '14:02:26', '14:43:30'),
+(20, 16, '2024-07-25', 0, '14:43:44', NULL),
+(21, 15, '2024-07-25', 0, '14:44:54', '14:48:01'),
+(22, 15, '2024-07-25', 0, '14:48:10', '17:09:14'),
+(23, 15, '2024-07-25', 0, '15:59:24', '17:09:14'),
+(24, 16, '2024-07-25', 0, '17:10:50', NULL),
+(25, 18, '2024-08-13', 0, '20:13:49', NULL),
+(26, 18, '2024-08-15', 0, '01:16:33', NULL),
+(27, 15, '2024-08-15', 0, '01:48:28', NULL),
+(28, 18, '2024-08-15', 0, '15:53:20', NULL),
+(29, 15, '2024-08-15', 0, '15:55:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -116,9 +127,9 @@ INSERT INTO `leaverequests` (`leave_id`, `user_id`, `LeaveType`, `start_date`, `
 (6, 3, 'earned', '2024-10-05', '2024-10-15', 'Holiday', 'Rejected', '2024-09-01', 'reject', NULL, NULL),
 (7, 1, 'sick', '2024-07-30', '2024-08-02', 'Dental surgery', 'Rejected', '2024-07-25', 'rejected', NULL, NULL),
 (8, 2, 'casual', '2024-08-10', '2024-08-15', 'Short vacation', 'Rejected', '2024-07-30', 'Weekend getaway.', 12, '2024-07-23'),
-(9, 3, 'sick', '2024-09-01', '2024-09-03', 'Migraine', 'Rejected', '2024-08-28', 'Severe migraine attacks.', 12, '2024-07-23'),
-(10, 1, 'earned', '2024-11-20', '2024-11-30', 'Long vacation', 'Approved by HR', '2024-10-15', 'Extended holiday break.', 12, '2024-07-23'),
-(11, 15, 'casual', '2024-07-24', '2024-07-26', 'something', 'Rejected', '2024-07-25', 'yess', 16, '2024-07-25');
+(9, 3, 'sick', '2024-09-01', '2024-09-03', 'Migraine', 'Approved by HR', '2024-08-28', 'Severe migraine attacks.', 15, '2024-07-25'),
+(10, 1, 'earned', '2024-11-20', '2024-11-30', 'Long vacation', 'Approved by PM', '2024-10-15', 'Extended holiday break.', 12, '2024-07-23'),
+(11, 15, 'casual', '2024-07-24', '2024-07-26', 'something', 'Approved by PM', '2024-07-25', 'yess', 16, '2024-07-25');
 
 -- --------------------------------------------------------
 
@@ -153,6 +164,32 @@ INSERT INTO `projects` (`project_id`, `project_name`, `description`, `start_date
 (9, 'project qq', 'qqq', '2024-07-04', '2024-07-31', 'Pending', NULL, 14),
 (10, 'project t', 'tt', '2024-07-04', '2024-07-31', 'Pending', 14, NULL),
 (11, 'Project CDE', 'CDE', '2024-07-04', '2024-07-31', 'Pending', 14, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rewards`
+--
+
+CREATE TABLE `rewards` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
+  `appreciation_note` text DEFAULT NULL,
+  `awarded_by` int(11) NOT NULL,
+  `awarded_on` timestamp NOT NULL DEFAULT current_timestamp(),
+  `redeemed_cash` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rewards`
+--
+
+INSERT INTO `rewards` (`id`, `user_id`, `points`, `appreciation_note`, `awarded_by`, `awarded_on`, `redeemed_cash`) VALUES
+(1, 1, 100, 'good', 18, '2024-08-13 20:42:15', 0),
+(2, 2, 100, 'Good job', 18, '2024-08-14 23:17:11', 0),
+(3, 17, 100, 'good', 18, '2024-08-14 23:47:14', 0),
+(11, 15, 900, 'nice', 18, '2024-08-15 03:39:19', 100);
 
 -- --------------------------------------------------------
 
@@ -196,7 +233,11 @@ INSERT INTO `salaries` (`salary_id`, `user_id`, `amount`, `payment_date`, `pay_p
 (19, 17, 3000.00, '2024-07-31', '2024-07-01', '2024-07-31', 'Project Q', 37.50, 80.00),
 (20, 15, 144.33, '2024-07-25', '2024-07-01', '2024-07-31', NULL, 20.00, 7.22),
 (21, 15, 146.80, '2024-07-25', '2024-07-09', '2024-07-31', NULL, 20.00, 7.34),
-(22, 15, 147.00, '2024-07-25', '2024-07-09', '2024-07-31', NULL, 20.00, 7.35);
+(22, 15, 147.00, '2024-07-25', '2024-07-09', '2024-07-31', NULL, 20.00, 7.35),
+(23, 15, 279.00, '2024-07-25', '2024-07-01', '2024-07-31', NULL, 20.00, 13.95),
+(24, 15, 306.40, '2024-07-25', '2024-07-01', '2024-07-31', NULL, 20.00, 15.32),
+(25, 15, 307.40, '2024-07-25', '2024-07-01', '2024-07-31', NULL, 20.00, 15.37),
+(26, 15, 317.80, '2024-07-25', '2024-07-01', '2024-07-31', NULL, 20.00, 15.89);
 
 -- --------------------------------------------------------
 
@@ -273,7 +314,8 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `first_name`, `l
 (14, 'userone@mail.com', '$2y$10$TyVjOXMSbiBXTqzup54Yd.GkQG/XtVg82X6xOnSo.0BHRMhjqjJq6', 'project manager', 'user', 'one', 'userone@mail.com', '1111111111', 'address 5', '2024-07-01', 'Front end', 'project manager', '2024-07-02', NULL, NULL, NULL, NULL, 0),
 (15, 'empone@mail.com', '$2y$10$jg9JANbRXR8yypI2nakXGeMnFkUCRsTmCpZcuPJO4IuAGlmsKCE/2', 'employee', 'emp', 'one', 'empone@mail.com', '1111111111', 'address 2', '2024-07-01', 'back end', 'developer', '2024-07-01', NULL, NULL, NULL, 4, 20),
 (16, 'ob@mail.com', '$2y$10$WEiofwoUwxCzyc6KuX4r6uaXK/g00iaCuTL0J8Vy9UTC58H5.KGMG', 'HR', 'Bob', 'Brown', 'ob@mail.com', '1111111111', 'address123', '2020-08-01', 'HR', 'HR', '1996-01-01', NULL, NULL, NULL, NULL, 0),
-(17, 'anaij@mail.com', '$2y$10$xR8muB7UXejd.9X0jPU6neEKoifzeOrv8BYno8tKG70Js9SAN7Mti', 'employee', 'anai', 'joshy', 'anaij@mail.com', '1234567890', 'address231', '2024-07-01', 'development', 'employee', '2000-02-08', NULL, NULL, NULL, NULL, 0);
+(17, 'anaij@mail.com', '$2y$10$xR8muB7UXejd.9X0jPU6neEKoifzeOrv8BYno8tKG70Js9SAN7Mti', 'employee', 'anai', 'joshy', 'anaij@mail.com', '1234567890', 'address231', '2024-07-01', 'development', 'employee', '2000-02-08', NULL, NULL, NULL, NULL, 0),
+(18, 'admin@m.com', '$2y$10$NJ1oDyALm/rhsdgigr4w9eUXsryXmlZx5o13vLvMF7f6n1zkTrnde', 'admin', 'admin', 'admin', 'admin@m.com', '1234567890', '001 adress ', '2024-01-01', 'admin', 'admin', '2000-01-01', NULL, NULL, NULL, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -309,6 +351,14 @@ ALTER TABLE `projects`
   ADD KEY `managed_by` (`managed_by`);
 
 --
+-- Indexes for table `rewards`
+--
+ALTER TABLE `rewards`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `awarded_by` (`awarded_by`);
+
+--
 -- Indexes for table `salaries`
 --
 ALTER TABLE `salaries`
@@ -340,7 +390,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `complaints`
@@ -361,10 +411,16 @@ ALTER TABLE `projects`
   MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `rewards`
+--
+ALTER TABLE `rewards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `salaries`
 --
 ALTER TABLE `salaries`
-  MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -376,7 +432,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -401,6 +457,13 @@ ALTER TABLE `leaverequests`
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`managed_by`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `rewards`
+--
+ALTER TABLE `rewards`
+  ADD CONSTRAINT `rewards_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `rewards_ibfk_2` FOREIGN KEY (`awarded_by`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `salaries`
