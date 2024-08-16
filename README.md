@@ -1,7 +1,16 @@
 # smart-employee HR login credential
 
-# usernmae: ob@mail.com
-# password: 1234
+# Employee Login
+# usernmae: Akhil@mail.com
+# password: 123
 
-# usernmae: varunshah@gmail.com
-# password: 12345678
+# Project Manager Login
+# usernmae: Anai@mail.com
+# password: 123
+
+# HR Login
+# usernmae: Kanvi@mail.com
+# password: 123
+
+# usernmae: Admin@mail.com
+# password: 123
